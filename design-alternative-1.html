@@ -1,0 +1,1352 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>So denken wir Führungskräfte bei botek · Technische Blaupause</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TECHNISCHE BLAUPAUSE — Engineering Blueprint
+   botek Führungs-Booklet · Design-Alternative-1
+   ============================================================ */
+:root{
+  --paper:#0e2233;            /* blueprint dark blue-anthracite */
+  --paper-2:#0a1b29;
+  --ink:#0a1b29;
+  --line:#cfe3f2;            /* white-ish blueprint lines */
+  --line-soft:rgba(207,227,242,.55);
+  --line-faint:rgba(207,227,242,.16);
+  --grid:rgba(207,227,242,.07);
+  --accent:#ea7c13;          /* botek orange */
+  --accent-lt:#ff9d00;
+  --anthra:#363839;
+  --white:#ffffff;
+  --paper-light:#f5f5f5;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;padding:0;
+  background:#06121c;
+  color:var(--line);
+  font-family:"Archivo","Segoe UI",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.55;
+}
+
+/* mono numbers / labels */
+.mono{font-family:"IBM Plex Mono",monospace;}
+
+/* ============== SHEET ============== */
+.sheet{
+  width:min(1180px,94vw);
+  margin:30px auto;
+  background:
+    linear-gradient(var(--grid) 1px,transparent 1px) 0 0/100% 28px,
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/28px 100%,
+    radial-gradient(ellipse 120% 80% at 50% 0%, #143049 0%, var(--paper) 55%, var(--paper-2) 100%);
+  border:1px solid var(--line-soft);
+  position:relative;
+  padding:46px 52px 56px;
+  box-shadow:0 18px 60px rgba(0,0,0,.5);
+}
+/* corner ticks on every sheet */
+.sheet::before,.sheet::after{
+  content:"";position:absolute;width:18px;height:18px;pointer-events:none;
+}
+.sheet::before{top:10px;left:10px;border-top:1.5px solid var(--accent);border-left:1.5px solid var(--accent);}
+.sheet::after{bottom:10px;right:10px;border-bottom:1.5px solid var(--accent);border-right:1.5px solid var(--accent);}
+
+/* title-block (drawing frame stamp) on each sheet */
+.titleblock{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-bottom:1px solid var(--line-faint);
+  padding-bottom:10px;margin-bottom:30px;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;
+  color:var(--line-soft);
+}
+.titleblock .tb-l{display:flex;gap:22px;align-items:center;}
+.titleblock .tb-l b{color:var(--line);}
+.titleblock .tb-rev{color:var(--accent-lt);}
+.titleblock img.tb-logo{height:16px;filter:brightness(0) invert(1);opacity:.9;}
+
+/* ============== HEADINGS ============== */
+.kicker{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:12px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--accent-lt);margin:0 0 12px;
+  display:flex;align-items:center;gap:14px;
+}
+.kicker::before{content:"";width:34px;height:1px;background:var(--accent);}
+h1.sec{
+  font-family:"Archivo",sans-serif;font-weight:900;
+  font-size:clamp(30px,4.4vw,54px);line-height:1.02;
+  letter-spacing:-.01em;color:var(--white);
+  margin:0 0 8px;text-transform:uppercase;
+}
+h1.sec .or{color:var(--accent);}
+h2.sub{
+  font-family:"Archivo",sans-serif;font-weight:700;
+  font-size:clamp(19px,2.3vw,26px);color:var(--line);
+  margin:0 0 16px;letter-spacing:.01em;
+}
+h2.sub .dim{font-family:"IBM Plex Mono",monospace;color:var(--accent-lt);font-size:.7em;font-weight:500;margin-right:10px;}
+h3.mini{
+  font-family:"IBM Plex Mono",monospace;font-weight:600;
+  font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent-lt);margin:0 0 8px;
+}
+
+/* body text */
+p{margin:0 0 14px;font-size:15.5px;color:#e6f0f8;}
+.lead{font-size:19px;line-height:1.5;color:var(--white);font-weight:500;max-width:62ch;margin-bottom:22px;}
+strong,b{color:var(--white);font-weight:700;}
+em,i{color:#cfe3f2;}
+.col2{column-count:2;column-gap:42px;}
+.col2 p{break-inside:avoid;}
+@media(max-width:760px){.col2{column-count:1;}}
+
+/* technical note / dimension caption */
+.note{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;
+  color:var(--line-soft);letter-spacing:.04em;
+  border-top:1px dashed var(--line-faint);padding-top:10px;margin-top:18px;
+}
+
+/* blockquote / spec */
+blockquote{
+  margin:22px 0;padding:18px 22px;
+  border:1px solid var(--line-faint);border-left:3px solid var(--accent);
+  background:rgba(207,227,242,.04);
+  font-size:16px;line-height:1.5;color:var(--white);font-style:italic;
+}
+blockquote cite{
+  display:block;font-style:normal;margin-top:12px;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;
+  color:var(--accent-lt);
+}
+
+/* ============== BLUEPRINT WATERMARK (drill cross-section) ============== */
+.bp-watermark{
+  position:absolute;pointer-events:none;color:var(--line);
+  opacity:.10;z-index:0;
+}
+.bp-watermark svg{display:block;width:100%;height:100%;}
+.sheet > *:not(.bp-watermark){position:relative;z-index:1;}
+
+/* ============== SVG DRILL (blueprint w/ dimension lines) ============== */
+.drill-fig{display:flex;justify-content:center;align-items:center;}
+.drill-fig svg{width:100%;height:auto;max-width:420px;}
+
+/* ============== COVER ============== */
+.cover{min-height:88vh;display:flex;flex-direction:column;}
+.cover .cover-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.cover .stamp{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  color:var(--line-soft);text-align:right;line-height:1.9;
+}
+.cover .stamp b{color:var(--accent-lt);}
+.cover-logo{height:30px;filter:brightness(0) invert(1);}
+.cover .cover-mid{flex:1;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center;margin:26px 0;}
+@media(max-width:860px){.cover .cover-mid{grid-template-columns:1fr;}}
+.cover h1.title{
+  font-family:"Archivo",sans-serif;font-weight:900;text-transform:uppercase;
+  font-size:clamp(38px,6.6vw,82px);line-height:.96;letter-spacing:-.02em;
+  color:var(--white);margin:0;
+}
+.cover h1.title .or{color:var(--accent);}
+.cover .subt{
+  font-family:"IBM Plex Mono",monospace;margin-top:26px;
+  font-size:clamp(13px,1.8vw,18px);letter-spacing:.28em;text-transform:uppercase;
+  color:var(--accent-lt);
+}
+.cover .subt::before{content:"// ";color:var(--line-soft);}
+.cover .cover-foot{
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--line-faint);padding-top:14px;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;color:var(--line-soft);
+}
+.cover-drill svg{width:100%;height:auto;max-width:460px;margin:0 auto;display:block;}
+
+/* TOC */
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 56px;}
+@media(max-width:760px){.toc-grid{grid-template-columns:1fr;}}
+.toc-grp{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-lt);margin:22px 0 6px;border-bottom:1px solid var(--line-faint);padding-bottom:5px;}
+.toc-line{display:flex;align-items:baseline;gap:8px;padding:5px 0;font-size:14.5px;}
+.toc-line .nm{flex:0 0 auto;color:#e6f0f8;}
+.toc-line .dots{flex:1;border-bottom:1px dotted var(--line-faint);transform:translateY(-3px);}
+.toc-line .pg{flex:0 0 auto;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent-lt);}
+
+/* ============== CARDS / GRIDS ============== */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+.grid2.skew{grid-template-columns:1.25fr .75fr;}
+@media(max-width:760px){.grid2,.grid2.skew{grid-template-columns:1fr;}}
+
+.spec-card{
+  border:1px solid var(--line-faint);background:rgba(10,27,41,.5);
+  padding:18px 20px;position:relative;
+}
+.spec-card .sc-tag{
+  position:absolute;top:-10px;left:14px;background:var(--paper);
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;padding:2px 9px;border:1px solid var(--accent);color:var(--accent-lt);
+}
+.spec-card.warn .sc-tag{border-color:#e0524a;color:#ff8a82;}
+
+/* step list (problemlösungskreis) */
+.steps{display:grid;gap:14px;}
+.step{
+  display:grid;grid-template-columns:72px 1fr;gap:20px;align-items:start;
+  border:1px solid var(--line-faint);padding:16px 18px;
+  background:rgba(10,27,41,.45);
+}
+.step .sn{
+  font-family:"IBM Plex Mono",monospace;font-weight:700;
+  font-size:24px;color:var(--accent);
+  border-right:1px solid var(--line-faint);padding-right:16px;line-height:1;
+}
+.step .sn small{display:block;font-size:9px;letter-spacing:.1em;color:var(--line-soft);margin-top:8px;font-weight:500;}
+.step .st-name{color:var(--white);font-weight:700;font-size:16px;margin-bottom:4px;}
+.step .st-desc{font-size:14px;color:#dbe8f3;}
+
+/* matrix / falle */
+.matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch;}
+@media(max-width:760px){.matrix-grid{grid-template-columns:1fr;}}
+.colblue,.colred{padding:16px 18px;border:1px solid var(--line-faint);}
+.colblue{border-top:4px solid #4f86c4;}
+.colred{border-top:4px solid #e0524a;}
+.colblue .h,.colred .h{font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:15px;letter-spacing:.1em;margin-bottom:8px;}
+.colblue .h{color:#7fb0e6;}
+.colred .h{color:#ff8a82;}
+.colblue ul,.colred ul{margin:0;padding-left:18px;font-size:14px;color:#dbe8f3;}
+
+/* tools table */
+.tooltable{width:100%;border-collapse:collapse;font-size:14.5px;}
+.tooltable td{padding:12px 14px;border-bottom:1px solid var(--line-faint);vertical-align:top;}
+.tooltable tr:nth-child(odd){background:rgba(207,227,242,.03);}
+.tooltable .nm{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--accent-lt);white-space:nowrap;letter-spacing:.05em;}
+.tooltable td:first-child{width:34%;}
+
+/* numbered list (formate) */
+.numlist{display:grid;gap:10px;margin-top:8px;}
+.numlist .nrow{display:grid;grid-template-columns:42px 1fr;align-items:center;gap:16px;border:1px solid var(--line-faint);padding:12px 16px;background:rgba(10,27,41,.4);}
+.numlist .nr{font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:18px;color:var(--accent);text-align:center;}
+.numlist .ntx{font-family:"Archivo";font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--white);}
+
+/* nogo/doso */
+.balance{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:8px;}
+@media(max-width:760px){.balance{grid-template-columns:1fr;}}
+.panel{border:1px solid var(--line-faint);padding:20px 20px 14px;position:relative;background:rgba(10,27,41,.45);}
+.panel.nogo{border-top:4px solid #e0524a;}
+.panel.doso{border-top:4px solid var(--accent);}
+.panel .ptag{position:absolute;top:-11px;left:16px;background:var(--paper);font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:2px 10px;border:1px solid;}
+.panel.nogo .ptag{color:#ff8a82;border-color:#e0524a;}
+.panel.doso .ptag{color:var(--accent-lt);border-color:var(--accent);}
+.panel ul{list-style:none;margin:8px 0 0;padding:0;}
+.panel li{padding:9px 0;border-bottom:1px solid var(--line-faint);font-size:14px;color:#dbe8f3;display:grid;grid-template-columns:18px 1fr;gap:10px;}
+.panel li:last-child{border-bottom:0;}
+.panel.nogo li::before{content:"✕";color:#ff8a82;font-family:"IBM Plex Mono";font-weight:700;}
+.panel.doso li::before{content:"✓";color:var(--accent-lt);font-family:"IBM Plex Mono";font-weight:700;}
+.panel li b{color:var(--white);}
+
+/* consent thumbs */
+.consent{display:grid;grid-template-columns:54px 1fr;gap:10px 18px;align-items:center;margin-top:8px;}
+.consent .ce{font-size:26px;text-align:center;}
+.consent .ct{font-size:14px;color:#dbe8f3;padding:8px 0;border-bottom:1px solid var(--line-faint);}
+
+/* about contact */
+.contact-card{border:1px solid var(--line-faint);padding:20px 22px;background:rgba(10,27,41,.5);}
+.contact-card h3{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-lt);margin:0 0 10px;}
+.contact-card .r{font-size:14px;color:#e6f0f8;padding:2px 0;}
+.imprint{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--line-soft);line-height:1.7;margin-top:26px;border-top:1px solid var(--line-faint);padding-top:14px;}
+
+/* product photo accents */
+.photo-strip{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;}
+.photo-strip img{height:54px;width:auto;border:1px solid var(--line-faint);filter:grayscale(.3) brightness(1.05);background:#0a1b29;padding:4px;}
+
+/* ============== FOOTER NAV (screen only) ============== */
+.gallery-nav{
+  width:min(1180px,94vw);margin:10px auto 60px;
+  border:1px solid var(--line-faint);background:var(--paper-2);
+  padding:22px 26px;
+}
+.gallery-nav .gh{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-lt);margin-bottom:14px;}
+.gallery-nav .gl{display:flex;flex-wrap:wrap;gap:10px;}
+.gallery-nav a{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.04em;
+  color:var(--line);text-decoration:none;border:1px solid var(--line-faint);
+  padding:7px 13px;transition:.15s;
+}
+.gallery-nav a:hover{border-color:var(--accent);color:var(--accent-lt);}
+.gallery-nav a.active{background:var(--accent);color:#0a1b29;border-color:var(--accent);font-weight:700;}
+.gallery-nav a.pdf{border-color:var(--accent-lt);color:var(--accent-lt);}
+.brandline{text-align:center;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--line-soft);letter-spacing:.1em;margin-top:16px;}
+
+/* sheet bottom stamp */
+.sheet-foot{
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--line-faint);margin-top:34px;padding-top:12px;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;color:var(--line-soft);
+}
+.sheet-foot .bm{color:var(--accent-lt);font-weight:700;}
+
+/* ============================================================
+   PRINT — A4, clean multi-page, colors on, nav hidden
+   ============================================================ */
+@media print{
+  @page{size:A4 portrait;margin:14mm 13mm;}
+  html,body{background:#fff !important;color:#1a2733 !important;}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+  .gallery-nav,.brandline{display:none !important;}
+
+  .sheet{
+    width:auto;margin:0 0 0 0;border:none;box-shadow:none;padding:0 0 8mm;
+    background:#fff !important;
+    break-after:page;page-break-after:always;
+  }
+  .sheet:last-of-type{break-after:auto;page-break-after:always;}
+  .sheet::before,.sheet::after{display:none;}
+
+  /* invert blueprint -> light paper, dark ink */
+  .bp-watermark{opacity:.06 !important;color:#ea7c13 !important;}
+  .titleblock{color:#5a6b78;border-color:#cdd7df;}
+  .titleblock b,.titleblock .tb-l b{color:#1a2733;}
+  .titleblock img.tb-logo{filter:none;}
+  .cover-logo{filter:none;}
+
+  .kicker{color:#c2660c;}
+  .kicker::before{background:#ea7c13;}
+  h1.sec,.cover h1.title{color:#15212c !important;}
+  h1.sec .or,.cover h1.title .or{color:#ea7c13 !important;}
+  h2.sub{color:#15212c;}
+  h2.sub .dim{color:#c2660c;}
+  h3.mini{color:#c2660c;}
+  p,.step .st-desc,.colblue ul,.colred ul,.tooltable td,.panel li,.consent .ct,.contact-card .r{color:#243240 !important;}
+  .lead{color:#15212c !important;}
+  strong,b,.step .st-name,.panel li b,.numlist .ntx{color:#15212c !important;}
+  em,i{color:#3a4754 !important;}
+
+  blockquote{background:#fbf2e6 !important;border-color:#e6cba0;border-left-color:#ea7c13;color:#15212c !important;}
+  blockquote cite{color:#c2660c !important;}
+
+  .step,.spec-card,.numlist .nrow,.panel,.contact-card,.colblue,.colred{
+    background:#faf7f1 !important;border-color:#dfd4c2 !important;
+  }
+  .step .sn{color:#ea7c13 !important;border-color:#dfd4c2;}
+  .step .sn small{color:#7a6e55 !important;}
+  .spec-card .sc-tag,.panel .ptag{background:#fff !important;}
+  .spec-card .sc-tag{color:#c2660c;border-color:#ea7c13;}
+  .tooltable tr:nth-child(odd){background:#faf7f1 !important;}
+  .tooltable .nm,.toc-line .pg,.numlist .nr{color:#c2660c !important;}
+  .toc-grp{color:#c2660c;border-color:#cdd7df;}
+  .toc-line .dots,.note,.sheet-foot,.imprint{border-color:#cdd7df !important;color:#5a6b78 !important;}
+  .sheet-foot .bm,.toc-line .nm{color:#15212c !important;}
+  .drill-fig svg,.cover-drill svg{color:#15212c !important;}
+  .photo-strip img{filter:grayscale(.2);background:#fff;border-color:#dfd4c2;}
+
+  .grid2,.grid2.skew,.matrix-grid,.balance,.toc-grid,.about-grid,.col2{break-inside:avoid;}
+  .step,.spec-card,.panel,blockquote,.numlist .nrow{break-inside:avoid;}
+  h1.sec,h2.sub{break-after:avoid;}
+}
+
+/* reduce motion safe — no JS dependency anyway */
+</style>
+</head>
+<body>
+
+<!-- ============ reusable drill blueprint symbol (inline, dimensioned) ============ -->
+<!-- Watermark SVG defined once via <symbol> for reuse -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="drillsym" viewBox="0 0 120 120">
+    <circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="currentColor" fill-opacity="0.08" stroke="currentColor" stroke-width="1.1"/>
+    <path d="M60 8 L60 60 L14.97 86" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    <circle cx="84" cy="74" r="7" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <circle cx="74" cy="90" r="4.5" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <circle cx="60" cy="60" r="2.2" fill="currentColor"/>
+  </symbol>
+</svg>
+
+
+<!-- ============================================================ COVER -->
+<section class="sheet cover" id="cover">
+  <div class="bp-watermark" style="top:-40px;right:-60px;width:520px;height:520px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+
+  <div class="cover-top">
+    <img class="cover-logo" src="assets/logo-botek.png" alt="botek">
+    <div class="stamp">
+      DRG. NO. <b>BK-FK-001</b><br>
+      SHEET 01 · REV <b>A</b> · MASSSTAB 1:1<br>
+      botek Akademie · 2026
+    </div>
+  </div>
+
+  <div class="cover-mid">
+    <div>
+      <div class="kicker mono">Technische Blaupause · Führung</div>
+      <h1 class="title">So denken<br>wir Führungs&shy;kräfte bei <span class="or">botek</span></h1>
+      <div class="subt mono">Führung · Transformation · Wertschöpfung</div>
+    </div>
+    <div class="cover-drill">
+      <!-- dimensioned blueprint drawing of the drill cross-section -->
+      <svg viewBox="0 0 280 280" fill="none" stroke="currentColor" aria-hidden="true" style="color:var(--line);">
+        <!-- dimension box -->
+        <rect x="14" y="14" width="252" height="252" stroke="var(--line-faint)" stroke-width="1"/>
+        <!-- main circle -->
+        <g transform="translate(140 140) scale(1.9)">
+          <circle cx="0" cy="0" r="52" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M0 0 L0 -52 A52 52 0 0 0 -45.03 26 Z" fill="var(--accent)" fill-opacity="0.14" stroke="var(--accent)" stroke-width="1.1"/>
+          <path d="M0 -52 L0 0 L-45.03 26" stroke="var(--accent)" stroke-width="2"/>
+          <circle cx="24" cy="14" r="7" stroke="currentColor" stroke-width="1.2"/>
+          <circle cx="14" cy="30" r="4.5" stroke="currentColor" stroke-width="1.2"/>
+          <circle cx="0" cy="0" r="2.2" fill="var(--accent)" stroke="none"/>
+          <!-- crosshair -->
+          <line x1="-62" y1="0" x2="62" y2="0" stroke="var(--line-faint)" stroke-width=".7" stroke-dasharray="3 3"/>
+          <line x1="0" y1="-62" x2="0" y2="62" stroke="var(--line-faint)" stroke-width=".7" stroke-dasharray="3 3"/>
+        </g>
+        <!-- dimension line Ø -->
+        <g stroke="var(--accent-lt)" stroke-width="1">
+          <line x1="40" y1="250" x2="240" y2="250"/>
+          <line x1="40" y1="245" x2="40" y2="255"/>
+          <line x1="240" y1="245" x2="240" y2="255"/>
+        </g>
+        <text x="140" y="245" fill="var(--accent-lt)" stroke="none" font-family="IBM Plex Mono" font-size="11" text-anchor="middle">Ø WERTSCHÖPFUNG</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="cover-foot mono">
+    <span>botek Präzisionsbohrtechnik GmbH · www.botek.de</span>
+    <span>EINLIPPENBOHRER-QUERSCHNITT // FÜHRUNGS-BOOKLET</span>
+  </div>
+</section>
+
+
+<!-- ============================================================ INHALTSVERZEICHNIS -->
+<section class="sheet" id="toc">
+  <div class="bp-watermark" style="bottom:-50px;left:-50px;width:340px;height:340px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>INHALTSVERZEICHNIS</span></div>
+    <div><span class="tb-rev">SHEET 02 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Stückliste · Index</div>
+  <h1 class="sec">Inhalt</h1>
+
+  <div class="toc-grid">
+    <div>
+      <div class="toc-line"><span class="nm">Unsere Motivation</span><span class="dots"></span><span class="pg">01</span></div>
+      <div class="toc-line"><span class="nm">Der Problemlösungskreis</span><span class="dots"></span><span class="pg">02</span></div>
+
+      <div class="toc-grp">Hürden &amp; Stolpersteine</div>
+      <div class="toc-line"><span class="nm">Interne Referenz</span><span class="dots"></span><span class="pg">07</span></div>
+      <div class="toc-line"><span class="nm">Macht is a bitch</span><span class="dots"></span><span class="pg">08</span></div>
+      <div class="toc-line"><span class="nm">Blaue &amp; Rote Falle</span><span class="dots"></span><span class="pg">09</span></div>
+      <div class="toc-line"><span class="nm">Das Endmonster</span><span class="dots"></span><span class="pg">10</span></div>
+      <div class="toc-line"><span class="nm">Konsensfalle &amp; Stammtisch</span><span class="dots"></span><span class="pg">11</span></div>
+      <div class="toc-line"><span class="nm">Verantwortungsdiebstahl</span><span class="dots"></span><span class="pg">12</span></div>
+      <div class="toc-line"><span class="nm">Schulden &amp; Helden</span><span class="dots"></span><span class="pg">12</span></div>
+      <div class="toc-line"><span class="nm">Motivationsfalle</span><span class="dots"></span><span class="pg">13</span></div>
+      <div class="toc-line"><span class="nm">Gehorsamsfalle</span><span class="dots"></span><span class="pg">13</span></div>
+    </div>
+    <div>
+      <div class="toc-grp">Denkmodelle</div>
+      <div class="toc-line"><span class="nm">Primat der Wertschöpfung</span><span class="dots"></span><span class="pg">15</span></div>
+      <div class="toc-line"><span class="nm">Stacey-Matrix · Rot &amp; Blau</span><span class="dots"></span><span class="pg">16</span></div>
+      <div class="toc-line"><span class="nm">Zentrum &amp; Peripherie</span><span class="dots"></span><span class="pg">17</span></div>
+      <div class="toc-line"><span class="nm">Steuern &amp; Führen · Macht</span><span class="dots"></span><span class="pg">17</span></div>
+      <div class="toc-line"><span class="nm">Orientierung / Strategie / Vision</span><span class="dots"></span><span class="pg">18</span></div>
+      <div class="toc-line"><span class="nm">Gefühlte psych. Sicherheit</span><span class="dots"></span><span class="pg">19</span></div>
+      <div class="toc-line"><span class="nm">Team &amp; Gremium · Irrtum &amp; Fehler</span><span class="dots"></span><span class="pg">20</span></div>
+      <div class="toc-line"><span class="nm">Kontext · Strukturelle Entmachtung</span><span class="dots"></span><span class="pg">21</span></div>
+      <div class="toc-line"><span class="nm">Transparenz vs. Reporting</span><span class="dots"></span><span class="pg">22</span></div>
+
+      <div class="toc-grp">Werkzeuge</div>
+      <div class="toc-line"><span class="nm">Entscheidungstools · Konsent</span><span class="dots"></span><span class="pg">23</span></div>
+      <div class="toc-line"><span class="nm">Formate zur gemeinsamen Arbeit</span><span class="dots"></span><span class="pg">26</span></div>
+      <div class="toc-line"><span class="nm">Schutzraum</span><span class="dots"></span><span class="pg">27</span></div>
+      <div class="toc-line"><span class="nm">Lernen in 3 Akten</span><span class="dots"></span><span class="pg">28</span></div>
+      <div class="toc-line"><span class="nm">Führung · No-gos &amp; Do-sos</span><span class="dots"></span><span class="pg">32</span></div>
+      <div class="toc-line"><span class="nm">botek Akademie</span><span class="dots"></span><span class="pg">34</span></div>
+    </div>
+  </div>
+
+  <div class="sheet-foot mono"><span>botek Akademie · Führung &amp; Transformation</span><span class="bm">b ®</span></div>
+</section>
+
+
+<!-- ============================================================ MOTIVATION -->
+<section class="sheet" id="motivation">
+  <div class="bp-watermark" style="top:40px;right:-70px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 01 · MOTIVATION</span></div>
+    <div><span class="tb-rev">SHEET 03 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 01 · Grundlage</div>
+  <h1 class="sec">Unsere Motivation</h1>
+
+  <p class="lead">Ein Unternehmen existiert, um Probleme für den Kunden zu lösen. Gelingt das, würdigt der Kunde es mit Anerkennung — manchmal als bezahlte Rechnung, manchmal als Empfehlung.</p>
+
+  <div class="col2">
+    <p>Daher ist es sinnvoll, sich immer die Frage zu stellen: <b>„Welches Problem löst unser Handeln für unseren Kunden?"</b> Denn das ist Wertschöpfung und damit echte Arbeit. Alles andere ist entweder notwendiges Übel oder schlicht Beschäftigung — und damit Verschwendung.</p>
+    <p>Lasst uns die relevanten Probleme gemeinsam lösen. Eine entscheidende Rolle übernimmt dabei die Führungs-Kraft. Aber wer oder was ist das eigentlich?</p>
+    <p>Viele der Modelle in diesem Heft sind angelehnt — oder sogar 1:1 übernommen — von großartigen Vordenkern: <b>Dr. Gerhard Wohland</b>, <b>Benno Löffler</b>, <b>Mark Poppenborg</b> und <b>Lars Vollmer</b>. Soweit möglich haben wir Quellen und Bücher verlinkt. Oft sind es aber auch Gedanken, die zu weiteren Überlegungen geführt haben — Danke dafür, so oder so.</p>
+  </div>
+
+  <div class="note mono">REF: Quellen &amp; Vordenker — Wohland · Löffler · Poppenborg · Vollmer</div>
+
+  <div class="sheet-foot mono"><span>POS. 01 · MOTIVATION</span><span class="bm">b ® · 01</span></div>
+</section>
+
+
+<!-- ============================================================ PROBLEMLÖSUNGSKREIS — Overview -->
+<section class="sheet" id="kreis">
+  <div class="bp-watermark" style="bottom:-60px;right:-40px;width:320px;height:320px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 02 · PROBLEMLÖSUNGSKREIS</span></div>
+    <div><span class="tb-rev">SHEET 04 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 02 · Funktionsschema</div>
+  <h1 class="sec">Der Problem&shy;lösungs&shy;kreis</h1>
+
+  <div class="grid2 skew">
+    <div>
+      <p class="lead" style="font-size:17px;">Es sind genug Probleme für jeden da!</p>
+      <p>Jeden Tag werden wir als Firma mit „nicht schadlos ignorierbaren Ereignissen" konfrontiert. Nennen wir sie Probleme. Wie geht eine Organisation eigentlich mit diesen Ereignissen um?</p>
+      <p>Ein Versuch, diesen Prozess zu visualisieren, ist unser Problemlösungs&shy;kreislauf. Was darin nacheinander abläuft, erklären wir auf den folgenden Sheets.</p>
+    </div>
+    <div class="drill-fig">
+      <!-- 6-step cycle as blueprint dial -->
+      <svg viewBox="-120 -120 240 240" fill="none" aria-hidden="true" style="color:var(--line);">
+        <circle r="100" stroke="var(--line-faint)" stroke-width="1" stroke-dasharray="4 4"/>
+        <circle r="34" stroke="var(--accent)" stroke-width="1.4" fill="rgba(234,124,19,.08)"/>
+        <text y="-4" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="var(--white)" stroke="none">PROBLEM-</text>
+        <text y="8" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="var(--white)" stroke="none">LÖSUNG</text>
+        <!-- nodes -->
+        <g font-family="IBM Plex Mono" font-size="8" stroke="none">
+          <g transform="translate(0 -100)"><circle r="17" fill="var(--accent)" stroke="none"/><text text-anchor="middle" y="-1" fill="#0a1b29">01</text><text text-anchor="middle" y="8" fill="#0a1b29" font-size="5">PROBLEM</text></g>
+          <g transform="translate(87 -50)"><circle r="17" fill="none" stroke="var(--line)" stroke-width="1.2"/><text text-anchor="middle" y="-1" fill="var(--accent-lt)">02</text><text text-anchor="middle" y="8" fill="var(--line)" font-size="4.6">RELEVANZ</text></g>
+          <g transform="translate(87 50)"><circle r="17" fill="none" stroke="var(--line)" stroke-width="1.2"/><text text-anchor="middle" y="-1" fill="var(--accent-lt)">03</text><text text-anchor="middle" y="8" fill="var(--line)" font-size="5">IDEEN</text></g>
+          <g transform="translate(0 100)"><circle r="17" fill="var(--accent)" stroke="none"/><text text-anchor="middle" y="-1" fill="#0a1b29">04</text><text text-anchor="middle" y="8" fill="#0a1b29" font-size="4.6">ENTSCH.</text></g>
+          <g transform="translate(-87 50)"><circle r="17" fill="none" stroke="var(--line)" stroke-width="1.2"/><text text-anchor="middle" y="-1" fill="var(--accent-lt)">05</text><text text-anchor="middle" y="8" fill="var(--line)" font-size="5">MACHEN</text></g>
+          <g transform="translate(-87 -50)"><circle r="17" fill="none" stroke="var(--line)" stroke-width="1.2"/><text text-anchor="middle" y="-1" fill="var(--accent-lt)">06</text><text text-anchor="middle" y="8" fill="var(--line)" font-size="4.3">WIRKSAMK.</text></g>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 02 · PROBLEMLÖSUNGSKREIS</span><span class="bm">b ® · 02</span></div>
+</section>
+
+
+<!-- ============================================================ PROBLEMLÖSUNGSKREIS — Schritte -->
+<section class="sheet" id="kreis-schritte">
+  <div class="bp-watermark" style="top:60px;left:-70px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 02 · ABLAUF 01–06</span></div>
+    <div><span class="tb-rev">SHEET 05 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 02 · Ablaufschritte</div>
+  <h1 class="sec">Sechs Schritte</h1>
+
+  <div class="steps">
+    <div class="step"><div class="sn mono">01<small>PROBLEM</small></div><div><div class="st-name">Da ist es — ein neues Problem.</div><div class="st-desc">Es zeigt sich in vielerlei Gestalt: ein Kundenauftrag, eine Entwicklung am Absatzmarkt, eine Pandemie, eine Störung in der Produktion, notwendige Produktivitätssteigerung — usw.</div></div></div>
+    <div class="step"><div class="sn mono">02<small>RELEVANZ</small></div><div><div class="st-name">Für uns relevant? — Der Relevanz-Check.</div><div class="st-desc">Erste Frage: Ist das Problem bearbeitungswürdig? Erstaunlicherweise ist es viel schwieriger, sich <b>gegen</b> Probleme zu entscheiden. Die Versuchung, alles angehen zu wollen, ist groß. Defokussierung das Ergebnis. Die Leistung dieses Schrittes ist <b>Selektion</b>.</div></div></div>
+    <div class="step"><div class="sn mono">03<small>IDEEN</small></div><div><div class="st-name">Meinungsbildung &amp; Ideengenerierung</div><div class="st-desc">Das Problem ist verstanden und kann nicht ignoriert werden. Aber was tun? Welche Handlungsoptionen gibt es? Hat jemand eine Idee, eine Hypothese, den Drang etwas zu unternehmen? Gleichzeitig geht es darum, ein kollektives Gefühl für das Problem zu entwickeln.</div></div></div>
+    <div class="step"><div class="sn mono">04<small>ENTSCH.</small></div><div><div class="st-name">Entscheiden</div><div class="st-desc">Welches Tor darf es sein? Wichtig ist nur, dass entschieden wird. Die Alternative ist der Status quo. Nicht-Entscheiden ist unmöglich — denn das ist <b>immer</b> die Entscheidung dafür, dass alles so bleibt, wie es ist.</div></div></div>
+    <div class="step"><div class="sn mono">05<small>MACHEN</small></div><div><div class="st-name">Umsetzen</div><div class="st-desc">Nun geht's ans Machen. Das Entschiedene wird umgesetzt.</div></div></div>
+    <div class="step"><div class="sn mono">06<small>WIRKSAMK.</small></div><div><div class="st-name">Wirksamkeitscheck</div><div class="st-desc">Ist der Kunde zufrieden? Es geht nicht darum, ihm <b>alle</b> Wünsche von den Lippen abzulesen. Aber wir sind angetreten, das ursprüngliche Problem zu lösen. Ist es gelöst — gut. Wenn nicht: umso besser, der Kreis beginnt von Neuem.</div></div></div>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 02 · ABLAUF</span><span class="bm">b ® · 04</span></div>
+</section>
+
+
+<!-- ============================================================ HÜRDEN — Opener -->
+<section class="sheet" id="huerden">
+  <div class="bp-watermark" style="top:-30px;right:-50px;width:380px;height:380px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 03 · HÜRDEN</span></div>
+    <div><span class="tb-rev">SHEET 06 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 03 · Toleranzanalyse</div>
+  <h1 class="sec">Hürden &amp; <span class="or">Stolpersteine</span></h1>
+
+  <div class="col2">
+    <p>Werden Probleme gelöst, wird der Kreis immer durchlaufen. Manchmal geht das sehr schnell: in wenigen Minuten werden Probleme erkannt, angenommen, diskutiert, entschieden, umgesetzt — und am Ende freudig erledigt.</p>
+    <p>Manchmal ist es aber erstaunlich zäh. Diskussionen ziehen sich wie Kaugummi, alle sind sich einig, dass jemand etwas tun müsste, es gibt sogar klare Meinungen, was getan werden sollte. Aber es passiert — <b>NICHTS!</b> Woran liegt das?</p>
+    <p>Aus unserer Sicht hilft es, nach folgenden <b>Hürden und Stolpersteinen</b> Ausschau zu halten, die den Kreislauf bremsen können.</p>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 03 · HÜRDEN — ALLGEMEIN</span><span class="bm">b ® · 06</span></div>
+</section>
+
+
+<!-- ============================================================ INTERNE REFERENZ + MACHT -->
+<section class="sheet" id="referenz-macht">
+  <div class="bp-watermark" style="bottom:-50px;left:-60px;width:320px;height:320px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 03 · A1–A2</span></div>
+    <div><span class="tb-rev">SHEET 07 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 03 · Fehlerquellen</div>
+  <h2 class="sub"><span class="dim mono">A1</span>Interne Referenz</h2>
+  <p>Wann ist ein Problem <b>WIRKLICH</b> relevant? Wer oder was entscheidet darüber? Wenn Wertschöpfung wirklich <b>nur</b> die Problemlösung für den Kunden ist — kann verwendete Zeit für andere Dinge dann Verschwendung sein? Oft sieht man sich mit Vorgaben und Arbeitsanweisungen konfrontiert, die <b>intern</b> referenziert sind: nicht dem Kunden, sondern der Vorgabe dienend. Das gilt es kritisch zu hinterfragen.</p>
+
+  <h2 class="sub" style="margin-top:26px;"><span class="dim mono">A2</span>Macht is a bitch</h2>
+  <p>Macht wird per Stellung erteilt. Sie funktioniert durch die Idee möglicher Sanktionen — das Machtgefälle (wer kann wem mehr Schaden zufügen). Macht ist oft sinnvoll: immer dann, wenn der Wissensvorsprung beim Mächtigen liegt. So erfährt die Organisation Geschwindigkeit im Durchlauf des Kreislaufes.</p>
+  <p><b>Macht hat nur einen Haken — it's a bitch.</b> Es besteht die Gefahr, dass Dinge verwechselt werden: z.B. die Stelle mit der Person. Dann kann einem das Machtgefühl zu Kopfe steigen. Was bekanntermaßen keinem gut tut.</p>
+  <blockquote>Willst du den Charakter eines Menschen erkennen, so gib ihm Macht.<cite>Abraham Lincoln</cite></blockquote>
+
+  <div class="sheet-foot mono"><span>POS. 03 · A1–A2</span><span class="bm">b ® · 07–08</span></div>
+</section>
+
+
+<!-- ============================================================ BLAUE & ROTE FALLE -->
+<section class="sheet" id="falle">
+  <div class="bp-watermark" style="top:30px;right:-60px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 03 · A3</span></div>
+    <div><span class="tb-rev">SHEET 08 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 03 · Material-Fehlpaarung</div>
+  <h2 class="sub"><span class="dim mono">A3</span>Blaue &amp; Rote Falle</h2>
+
+  <div class="grid2 skew">
+    <div>
+      <p>Begegnet man hochdynamischen (<b>roten</b>) Problemen mit eher blauen Lösungsansätzen, nennen wir das die <b>„blaue Falle"</b>. Die eigentliche Problemlösung wird auf die Hinterbühne gedrängt. Prozesstheater, Heuchelei und fehlende Anpassungsfähigkeit sind unausweichliche Folgen.</p>
+      <p>Verwendet man zur Lösung niederkomplexer (<b>blauer</b>) Probleme immer wieder rote Improvisation, ist dies ineffizient. Wir nennen es <b>„rote Falle"</b>.</p>
+    </div>
+    <div>
+      <div class="spec-card" style="margin-bottom:24px;">
+        <span class="sc-tag mono">Blaue Falle</span>
+        <svg viewBox="0 0 300 60" preserveAspectRatio="none" style="width:100%;height:50px;display:block;margin-top:6px;">
+          <polygon points="0,0 300,0 300,60 0,60" fill="#1d4f8c"/>
+          <polygon points="300,0 300,60 0,60" fill="#c33"/>
+        </svg>
+        <div class="note mono" style="border:0;padding:6px 0 0;margin:0;">PROBLEM rot → LÖSUNG blau</div>
+      </div>
+      <div class="spec-card">
+        <span class="sc-tag mono">Rote Falle</span>
+        <svg viewBox="0 0 300 60" preserveAspectRatio="none" style="width:100%;height:50px;display:block;margin-top:6px;">
+          <polygon points="0,0 300,0 300,60 0,60" fill="#c33"/>
+          <polygon points="300,0 300,60 0,60" fill="#1d4f8c"/>
+        </svg>
+        <div class="note mono" style="border:0;padding:6px 0 0;margin:0;">PROBLEM blau → LÖSUNG rot</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 03 · A3</span><span class="bm">b ® · 09</span></div>
+</section>
+
+
+<!-- ============================================================ ENDMONSTER + KONSENS/STAMMTISCH -->
+<section class="sheet" id="endmonster">
+  <div class="bp-watermark" style="bottom:-40px;right:-50px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 03 · A4–A5</span></div>
+    <div><span class="tb-rev">SHEET 09 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 03 · Spannungsrisse</div>
+  <h2 class="sub"><span class="dim mono">A4</span>Das Endmonster</h2>
+  <p>Ein Problem kommt unschuldig ums Eck. Klein, abgegrenzt — und es scheint realistisch, Lösungen zu finden. Nun werden weitere Disziplinen hinzugezogen, Interessensgruppen steigen in die Diskussion ein, wichtige Aspekte und denkbare Szenarien werden beschrieben. Bis man sich umschaut, wurde aus dem kleinen Problem das <b>Endmonster</b> — als würde man im Computerspiel direkt nach dem Intro gegen den Endgegner antreten. Frust, Resignation und am Ende Kapitulation ist zu erwarten.</p>
+
+  <h2 class="sub" style="margin-top:24px;"><span class="dim mono">A5</span>Konsensfalle &amp; Stammtischphänomen</h2>
+  <div class="col2">
+    <p>Ist es nicht schön, wenn sich alle einig sind? Vor allem in einer Gruppe, zu der man gerne gehören will? Blöd nur, wenn es unterschiedliche Meinungen gibt! Gepaart mit unserer Sozialisierung im Mehrheitsentscheiden finden wir uns oft in nicht enden wollenden Diskussionsschleifen. Bis zur Erschöpfung werden Argumente wiederholt — obwohl der Punkt schon zu Beginn verstanden war. Diese Endlosschleife nennen wir <b>Konsensfalle</b>.</p>
+    <p>Ähnlich am Stammtisch: Man trifft sich, Meinungen werden ausgetauscht, ein Monolog reiht sich an den nächsten. Aber da man keine Verantwortung trägt und keine Umsetzungsmöglichkeit hat, bleibt es beim Treffen und Sprechen. Eine Entscheidung oder Handlung leitet sich nicht ab! Willkommen am <b>Stammtisch</b>.</p>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 03 · A4–A5</span><span class="bm">b ® · 10–11</span></div>
+</section>
+
+
+<!-- ============================================================ VERANTWORTUNG + SCHULDEN/HELDEN -->
+<section class="sheet" id="verantwortung">
+  <div class="bp-watermark" style="top:40px;left:-70px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 03 · A6–A7</span></div>
+    <div><span class="tb-rev">SHEET 10 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 03 · Lastabtrag</div>
+  <h2 class="sub"><span class="dim mono">A6</span>Verantwortungsdiebstahl</h2>
+  <p>Teams, die Verantwortung übernehmen, wünscht sich jeder. Bis zu dem Punkt, an dem Lösungswege getrieben werden, die so gar nicht zur eigenen Vorstellung passen. Nun zeigt sich, ob es einen ausreichenden Autonomiegrad gibt. Oder anders: <i>„Behält der Vorgesetzte die Nerven?"</i> Denn wird über Macht der eigens präferierte Lösungsweg erzwungen, ist auch die Verantwortung nicht mehr für das Team verfügbar.</p>
+
+  <h2 class="sub" style="margin-top:24px;"><span class="dim mono">A7</span>Schulden &amp; Helden</h2>
+  <p>Diese Falle lässt sich für uns einfach und stimmig mit folgendem Zitat auf den Punkt bringen.</p>
+  <blockquote>Solange Schuldige (oder Helden) gebraucht werden, um eine Situation plausibel zu erklären, ist sie noch nicht verstanden.<cite>Dr. Gerhard Wohland</cite></blockquote>
+  <div class="note mono">REF: Wohland / Wiemeyer, „Denkwerkzeuge der Höchstleister", 2012, S. 24</div>
+
+  <div class="sheet-foot mono"><span>POS. 03 · A6–A7</span><span class="bm">b ® · 12</span></div>
+</section>
+
+
+<!-- ============================================================ MOTIVATIONSFALLE + GEHORSAMSFALLE -->
+<section class="sheet" id="motivationsfalle">
+  <div class="bp-watermark" style="bottom:-50px;right:-60px;width:320px;height:320px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 03 · A8–A9</span></div>
+    <div><span class="tb-rev">SHEET 11 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 03 · Vorspannung</div>
+  <h2 class="sub"><span class="dim mono">A8</span>Motivationsfalle</h2>
+  <p><b>JEDER ist motiviert, bis er lang genug vom System demotiviert wurde!</b></p>
+  <p>Viele Jahre galt das Narrativ, Menschen müssten extrinsisch motiviert werden. Das ist inzwischen widerlegt. Vielmehr hilft die Haltung, dass jeder Mensch Probleme lösen und seinen Beitrag leisten will. Beobachtet man also Menschen, die keine Lust mehr zeigen mitzuhelfen, lohnt sich die Suche nach den Gründen, wie es so weit kommen konnte.</p>
+
+  <h2 class="sub" style="margin-top:24px;"><span class="dim mono">A9</span>Gehorsamsfalle</h2>
+  <p>Unterschätze niemals den sozialen Druck der Meinung von Mächtigen. Am Ende ist es nur logisch, dass man gefallen will. <b>Eine gute Idee sollte keine Hierarchie kennen!</b></p>
+  <blockquote>Verantwortung wird spürbar, wenn der Gehorsam kollabiert und in Widerständigkeit umschlägt, die der Problemlösung dient.<cite>Benno Löffler</cite></blockquote>
+  <div class="note mono">REF: Benno Löffler, „Saugute Zusammenarbeit", 2021, S. 159</div>
+
+  <div class="sheet-foot mono"><span>POS. 03 · A8–A9</span><span class="bm">b ® · 13</span></div>
+</section>
+
+
+<!-- ============================================================ DENKMODELLE — PRIMAT -->
+<section class="sheet" id="primat">
+  <div class="bp-watermark" style="top:-30px;right:-50px;width:380px;height:380px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 04 · DENKMODELLE</span></div>
+    <div><span class="tb-rev">SHEET 12 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 04 · Konstruktionsprinzipien</div>
+  <h1 class="sec">Denkmodelle</h1>
+  <h2 class="sub"><span class="dim mono">B1</span>Primat der Wertschöpfung</h2>
+
+  <div class="grid2 skew">
+    <div>
+      <p><b>Wertschöpfung ist das, was der Kunde bezahlt.</b></p>
+      <p>Wird Wertschöpfung versehentlich unterlassen, dann bemerkt der Kunde das und beklagt sich bitterlich.</p>
+      <p>Wird unnötiger Schnickschnack unterlassen, dann ist das dem Kunden gleichgültig — denn er bemerkt es gar nicht.</p>
+    </div>
+    <div class="spec-card">
+      <span class="sc-tag mono">Prinzip</span>
+      <svg viewBox="0 0 220 120" style="width:100%;height:auto;margin-top:6px;" fill="none" stroke="var(--line)" aria-hidden="true">
+        <rect x="14" y="14" width="192" height="92" stroke="var(--line-faint)" stroke-width="1"/>
+        <line x1="40" y1="92" x2="180" y2="92" stroke="var(--accent)" stroke-width="2"/>
+        <line x1="40" y1="92" x2="40" y2="34" stroke="var(--accent)" stroke-width="2"/>
+        <polyline points="40,80 80,64 120,44 170,28" stroke="var(--accent-lt)" stroke-width="2"/>
+        <circle cx="170" cy="28" r="3" fill="var(--accent-lt)" stroke="none"/>
+        <text x="48" y="28" font-family="IBM Plex Mono" font-size="9" fill="var(--accent-lt)" stroke="none">WERT</text>
+        <text x="120" y="104" font-family="IBM Plex Mono" font-size="9" fill="var(--line-soft)" stroke="none">KUNDE</text>
+      </svg>
+      <div class="note mono" style="border:0;padding:8px 0 0;margin:0;">Bild-Idee nach: Fabian Schünke, primat-der-wertschoepfung.de</div>
+    </div>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 04 · B1</span><span class="bm">b ® · 15</span></div>
+</section>
+
+
+<!-- ============================================================ STACEY MATRIX -->
+<section class="sheet" id="stacey">
+  <div class="bp-watermark" style="bottom:-50px;left:-60px;width:320px;height:320px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 04 · B2</span></div>
+    <div><span class="tb-rev">SHEET 13 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 04 · Kennfeld</div>
+  <h2 class="sub"><span class="dim mono">B2</span>Stacey-Matrix · Rot &amp; Blau</h2>
+
+  <div class="grid2">
+    <div class="matrix-grid">
+      <div class="colblue">
+        <div class="h mono">WIE?</div>
+        <ul><li>Prozess</li><li>Regel</li><li>Steuern</li><li>Wissen</li><li>Fehler</li></ul>
+      </div>
+      <div class="colred">
+        <div class="h mono">WER?</div>
+        <ul><li>Projekt</li><li>Prinzip</li><li>Führung</li><li>Könner / Talent</li><li>Irrtum</li></ul>
+      </div>
+    </div>
+    <div class="drill-fig">
+      <svg viewBox="0 0 240 200" style="width:100%;height:auto;" fill="none" aria-hidden="true">
+        <rect x="36" y="14" width="190" height="160" stroke="var(--line-faint)" stroke-width="1"/>
+        <!-- diagonal regions -->
+        <polygon points="36,174 226,174 36,14" fill="#1d4f8c" fill-opacity="0.35"/>
+        <polygon points="226,174 226,14 36,14" fill="#c33" fill-opacity="0.35"/>
+        <line x1="36" y1="174" x2="226" y2="14" stroke="var(--line)" stroke-width="1"/>
+        <text x="80" y="150" font-family="IBM Plex Mono" font-size="9" fill="#9fc4ee" transform="rotate(-40 80 150)">einfach</text>
+        <text x="110" y="120" font-family="IBM Plex Mono" font-size="9" fill="#9fc4ee" transform="rotate(-40 110 120)">kompliziert</text>
+        <text x="150" y="80" font-family="IBM Plex Mono" font-size="9" fill="#fff" transform="rotate(-40 150 80)">komplex</text>
+        <text x="196" y="30" font-family="IBM Plex Mono" font-size="9" fill="#ffb0aa" font-style="italic">Chaos</text>
+        <!-- axes labels -->
+        <text x="131" y="194" font-family="IBM Plex Mono" font-size="9" fill="var(--line-soft)" text-anchor="middle">PROBLEM · klar → unklar</text>
+        <text x="20" y="94" font-family="IBM Plex Mono" font-size="9" fill="var(--line-soft)" text-anchor="middle" transform="rotate(-90 20 94)">LÖSUNG · klar → unklar</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 04 · B2</span><span class="bm">b ® · 16</span></div>
+</section>
+
+
+<!-- ============================================================ ZENTRUM/PERIPHERIE + STEUERN/FÜHREN -->
+<section class="sheet" id="zentrum">
+  <div class="bp-watermark" style="top:50px;right:-60px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 04 · B3–B4</span></div>
+    <div><span class="tb-rev">SHEET 14 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 04 · Schnittansicht</div>
+  <h2 class="sub"><span class="dim mono">B3</span>Zentrum &amp; Peripherie</h2>
+  <p><b>Zentrum</b> = Arbeit am System <b>FÜR</b> den Kapitalgeber / die langfristige Zukunft der Organisation.<br>
+     <b>Peripherie</b> = Arbeit im System <b>FÜR</b> den Markt / den Kunden, der die Rechnungen zahlt.</p>
+  <p>Es sind keine Menschen oder Räume — vielmehr beobachtbare Rollen, die gefüllt werden müssen.</p>
+
+  <h2 class="sub" style="margin-top:24px;"><span class="dim mono">B4</span>Steuern &amp; Führen · Macht</h2>
+  <p><b>Steuern</b> funktioniert durch Macht und Gehorsam.<br>
+     <b>Führung</b> funktioniert durch Ansehen und freiwillige Gefolgschaft.</p>
+  <p>Es gibt hierbei kein gut oder schlecht, kein neu oder alt. Vielmehr geht es darum zu erkennen, welcher Mechanismus in welcher Situation dienlich oder eher hinderlich ist.</p>
+
+  <div class="sheet-foot mono"><span>POS. 04 · B3–B4</span><span class="bm">b ® · 17</span></div>
+</section>
+
+
+<!-- ============================================================ ORIENTIERUNG / STRATEGIE / VISION -->
+<section class="sheet" id="strategie">
+  <div class="bp-watermark" style="bottom:-40px;left:-60px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 04 · B5</span></div>
+    <div><span class="tb-rev">SHEET 15 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 04 · Sollbahn</div>
+  <h2 class="sub"><span class="dim mono">B5</span>Orientierung · Strategie · Vision</h2>
+
+  <blockquote>
+    „Eine Strategie braucht man, wenn die Zukunft nicht bekannt ist. Das trifft auf immer größere Teile der Wertschöpfung zu. Längst nicht auf alle, aber auf viele. Wenn schon alles bekannt ist, jeder also die genaue Schrittfolge kennt, um vom heutigen Zustand zu einem angestrebten zu kommen, dann braucht man keine Strategie sondern einen Plan. Der Plan beschreibt den Weg und verteilt Aufgaben. […]<br><br>
+    Strategie verhindert Beliebigkeit. Sie sorgt dafür, dass man auch ohne vollständiges Wissen und ohne Anweisungen am Ort des Geschehens entscheiden kann.<br><br>
+    Das tut eine Strategie, indem sie von der Kunst des Weglassens Gebrauch macht. Eine Strategie sagt einem Mitarbeiter nicht, was er tun soll, sondern was er nicht tun darf. Damit schließt sie viele Optionen aus. Was übrig bleibt, ist ein leerer Handlungsraum, innerhalb dessen Mitarbeiter entscheiden können, ohne jedes Mal fragen zu müssen."
+    <cite>Mark Poppenborg, „Wir führen anders!", 2021, S. 191 f.</cite>
+  </blockquote>
+
+  <div class="sheet-foot mono"><span>POS. 04 · B5</span><span class="bm">b ® · 18</span></div>
+</section>
+
+
+<!-- ============================================================ PSYCH. SICHERHEIT -->
+<section class="sheet" id="sicherheit">
+  <div class="bp-watermark" style="top:40px;right:-60px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 04 · B6</span></div>
+    <div><span class="tb-rev">SHEET 16 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 04 · Werkstoffgüte</div>
+  <h2 class="sub"><span class="dim mono">B6</span>Gefühlte psychologische Sicherheit · Vertrauen</h2>
+
+  <div class="col2">
+    <p>Sehr stark trivialisiert: <b>nur wer sich wohl und sicher fühlt</b>, wird aufhören zu taktieren und frei agieren. Wobei dies auch beherztes Streiten in der Sache bedeuten darf. In vielen Organisationen, Teams oder Arbeitsgruppen ist das aber nicht der Fall.</p>
+    <p>Es ist unsicher, ob man etwas zu befürchten hat. Es herrscht Misstrauen — und das aus gutem Grund. Da ist es nur logisch, dass Menschen vorsichtig werden und sich zurücknehmen, egal ob sie einen guten Einwand, eine Idee oder eine Warnung im Kopf hätten.</p>
+    <p><b>Vertrauen und gefühlte psychologische Sicherheit ist ein wirtschaftlich relevantes Gruppenphänomen.</b></p>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 04 · B6</span><span class="bm">b ® · 19</span></div>
+</section>
+
+
+<!-- ============================================================ TEAM/GREMIUM + IRRTUM/FEHLER -->
+<section class="sheet" id="team">
+  <div class="bp-watermark" style="bottom:-50px;right:-50px;width:320px;height:320px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 04 · B7–B8</span></div>
+    <div><span class="tb-rev">SHEET 17 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 04 · Baugruppen</div>
+  <h2 class="sub"><span class="dim mono">B7</span>Team &amp; Gremium</h2>
+  <p>Ein <b>Team</b> entwickelt Ideen und Handlungsoptionen, ein <b>Gremium</b> entscheidet, was getan wird. Das können, müssen aber nicht dieselben Personen sein. Manchmal liegt sogar in unterschiedlichen Besetzungen der Schlüssel, um im Kreislauf weiterzukommen.</p>
+
+  <h2 class="sub" style="margin-top:24px;"><span class="dim mono">B8</span>Irrtum &amp; Fehler · Experiment</h2>
+  <p>Wenn Wissen zum Problem vorliegt, es aber trotzdem anders / falsch gemacht wurde, ist das ein <b>Fehler</b>. Ist die Situation neu und noch nie dagewesen, ist ein <b>Irrtum</b> die Enttäuschung einer intelligenten Annahme.</p>
+  <p>Bei hochdynamischer Ausgangssituation kann es kein Wissen geben. Dann ist die Forderung nach einem Plan Unsinn. Dann muss man <b>inkrementell und experimentell</b> vorgehen. So lernt eine Organisation und erlangt Können.</p>
+
+  <div class="sheet-foot mono"><span>POS. 04 · B7–B8</span><span class="bm">b ® · 20</span></div>
+</section>
+
+
+<!-- ============================================================ KONTEXT + STRUKT. ENTMACHTUNG -->
+<section class="sheet" id="kontext">
+  <div class="bp-watermark" style="top:50px;left:-70px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 04 · B9–B10</span></div>
+    <div><span class="tb-rev">SHEET 18 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 04 · Einspannung</div>
+  <h2 class="sub"><span class="dim mono">B9</span>Kontext prägt Verhalten</h2>
+  <p>Der Kontext prägt das Verhalten eines Menschen viel mehr als Psyche, Typ oder Wertesystem. Ausnahmen bestätigen die Regel, aber tendenziell stimmt die Aussage. Auf einer Beerdigung, einem Fußballspiel und in einer Sauna kann man ähnliches Verhalten beobachten. Wechseln Menschen den Kontext, beobachtet man angepasstes Verhalten.</p>
+  <p><b>Daher ist es viel wirksamer, am Kontext statt an den Menschen zu arbeiten!</b></p>
+
+  <h2 class="sub" style="margin-top:24px;"><span class="dim mono">B10</span>Strukturelle Entmachtung · Professionelle Organisation von Freiwilligkeit</h2>
+  <p>Auch wenn gefühlte Sicherheit, Verantwortlichkeit oder freiwilliges Engagement zum größten Teil von nicht kausal beeinflussbaren Gefühlen getragen werden — es gibt Strukturen, die diese Phänomene begünstigen. So schafft es <b>SCRUM</b>, eine Gewaltenteilung zu erzeugen und Übergriffigkeit unwahrscheinlicher zu machen. Oder ein <b>OPEN SPACE</b>, den Spirit von Aufbruch und freiwilliger Problemlösung zu erzeugen.</p>
+
+  <div class="sheet-foot mono"><span>POS. 04 · B9–B10</span><span class="bm">b ® · 21</span></div>
+</section>
+
+
+<!-- ============================================================ TRANSPARENZ VS REPORTING -->
+<section class="sheet" id="transparenz">
+  <div class="bp-watermark" style="bottom:-40px;right:-60px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 04 · B11</span></div>
+    <div><span class="tb-rev">SHEET 19 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 04 · Informationsfluss</div>
+  <h2 class="sub"><span class="dim mono">B11</span>Transparenz vs. Reporting</h2>
+
+  <div class="col2">
+    <p>Es geht um Kommunikation, also den Fluss von Informationen. Allerdings empfiehlt es sich, genauer hinzuschauen.</p>
+    <p>Wenn mit der Information auch die Verantwortung fließt, nennen wir das <b>Reporting</b>. Werden Informationen oder Kommunikation öffentlich gemacht, um zu lernen, nennen wir das <b>Transparenz</b>.</p>
+    <p>Dient der Informationsfluss der Befriedigung des Sicherheitsbedürfnisses eines Vorgesetzten, dann ist es <b>Reporting</b>. Wahrscheinlich hat es wenig wertschöpfungsrelevanten Effekt.</p>
+    <p>Stellt jemand Informationen zur Verfügung mit dem Ziel zu lernen oder anderen Lernen zu ermöglichen, ist es <b>Transparenz</b>. <b>Eine tolle Zutat für lernende Organisationen!</b></p>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 04 · B11</span><span class="bm">b ® · 22</span></div>
+</section>
+
+
+<!-- ============================================================ WERKZEUGE — ENTSCHEIDUNGSTOOLS -->
+<section class="sheet" id="tools">
+  <div class="bp-watermark" style="top:-30px;right:-50px;width:380px;height:380px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 05 · WERKZEUGE</span></div>
+    <div><span class="tb-rev">SHEET 20 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 05 · Werkzeugkasten</div>
+  <h1 class="sec">Werkzeuge</h1>
+  <h2 class="sub"><span class="dim mono">C1</span>Entscheidungstools</h2>
+
+  <table class="tooltable">
+    <tr><td class="nm mono">KONSENS</td><td>Alle sind sich einig.</td></tr>
+    <tr><td class="nm mono">MEHRHEIT</td><td>Die Mehrheit ist dafür.</td></tr>
+    <tr><td class="nm mono">EINZELENTSCHEID</td><td>Einer entscheidet für das Team. <i>(Muss nicht der Mächtigste sein.)</i></td></tr>
+    <tr><td class="nm mono">KONSULT. EINZELENTSCHEID</td><td>Einer entscheidet für das Team, nachdem er sich Feedback geholt hat. <i>(Feedback ist nicht mit Freigabe zu verwechseln.)</i></td></tr>
+    <tr><td class="nm mono">ABLEHNUNG</td><td>Der Grad der Ablehnung wird abgefragt. <b>Gegen welchen Vorschlag existiert die größte Ablehnung?</b></td></tr>
+  </table>
+
+  <div class="sheet-foot mono"><span>POS. 05 · C1</span><span class="bm">b ® · 23</span></div>
+</section>
+
+
+<!-- ============================================================ KONSENT -->
+<section class="sheet" id="konsent">
+  <div class="bp-watermark" style="bottom:-50px;left:-60px;width:320px;height:320px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 05 · C1 · KONSENT</span></div>
+    <div><span class="tb-rev">SHEET 21 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 05 · Verfahren</div>
+  <h2 class="sub"><span class="dim mono">C1</span>Entscheidungstools · Konsent</h2>
+
+  <p><b>1. Die Vorbereitung</b><br>Ein Vorschlag ist die Grundlage zur Durchführung: Festlegung eines Moderators, Dokumentation der Vorschläge. Danach wird in einer Runde erfragt, ob alle das gleiche Verständnis über den Vorschlag haben.</p>
+  <p><b>2. Erster Durchgang</b></p>
+
+  <div class="consent">
+    <div class="ce">👍</div><div class="ct"><b>Daumen hoch</b> · <i>„Ja, ich bin dabei!"</i></div>
+    <div class="ce">👉</div><div class="ct"><b>Daumen zur Seite</b> · <i>„Ja, ich bin dabei, habe aber folgende Bedenken — die bitte gehört werden."</i></div>
+    <div class="ce">👎</div><div class="ct"><b>Daumen runter</b> · <i>„Nein, ich bin nicht dabei, denn ich habe folgende schwere Bedenken."</i></div>
+    <div class="ce">✊</div><div class="ct"><b>Faust · Veto</b> · Der Vorschlag geht so gar nicht. Ich wende Schaden ab. <b>ABER nun muss ich einen Lösungsvorschlag machen.</b></div>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 05 · C1 · KONSENT</span><span class="bm">b ® · 24</span></div>
+</section>
+
+
+<!-- ============================================================ FORMATE -->
+<section class="sheet" id="formate">
+  <div class="bp-watermark" style="top:50px;right:-60px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 05 · C2</span></div>
+    <div><span class="tb-rev">SHEET 22 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 05 · Vorrichtungen</div>
+  <h2 class="sub"><span class="dim mono">C2</span>Formate zur gemeinsamen Arbeit</h2>
+  <p>Folgende Formate können helfen, den Kontext zu verändern:</p>
+
+  <div class="numlist">
+    <div class="nrow"><div class="nr mono">1</div><div class="ntx">Open Space</div></div>
+    <div class="nrow"><div class="nr mono">2</div><div class="ntx">Fish-Bowl</div></div>
+    <div class="nrow"><div class="nr mono">3</div><div class="ntx">World Café</div></div>
+    <div class="nrow"><div class="nr mono">4</div><div class="ntx">Sprint</div></div>
+    <div class="nrow"><div class="nr mono">5</div><div class="ntx">Pitch</div></div>
+    <div class="nrow" style="border-color:var(--accent);"><div class="nr mono">+</div><div class="ntx">und Kombinationen daraus</div></div>
+  </div>
+
+  <div class="photo-strip">
+    <img src="assets/photo-bohrstange.png" alt="Bohrstange">
+    <img src="assets/photo-pilotbohrer.jpg" alt="Pilotbohrer">
+    <img src="assets/photo-tb300.jpg" alt="TB300">
+    <img src="assets/photo-t154.jpg" alt="T154">
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 05 · C2</span><span class="bm">b ® · 26</span></div>
+</section>
+
+
+<!-- ============================================================ SCHUTZRAUM -->
+<section class="sheet" id="schutzraum">
+  <div class="bp-watermark" style="bottom:-50px;right:-50px;width:320px;height:320px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 05 · C3</span></div>
+    <div><span class="tb-rev">SHEET 23 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 05 · Kühlkanal</div>
+  <h2 class="sub"><span class="dim mono">C3</span>Schutzraum</h2>
+
+  <p>Ein System hat ein Immunsystem. Kulturfremdes Vorgehen wird unterdrückt, denn es stört das operative Geschäft. Wenn aber die These besteht, dass eine lokal andere Vorgehensweise ein Experiment wäre, muss dieses Experiment vor dem (Immun-)System geschützt werden. Dies geht z.B. mit einem <b>Schutzraum</b>. Dieser legitimiert lokale Ausnahmen.</p>
+
+  <div class="grid2">
+    <div class="spec-card">
+      <span class="sc-tag mono">Zutaten</span>
+      <ul style="margin:8px 0 0;padding-left:18px;font-size:14px;color:#dbe8f3;line-height:1.6;">
+        <li>Ein Problem</li>
+        <li>Freiwillige, die <i>„es anders probieren wollen"</i> — idealerweise Könner</li>
+        <li>Mächtige, die das Experiment öffentlich legitimieren können</li>
+        <li>Eine Umgebung, die sich beeindrucken lässt</li>
+      </ul>
+    </div>
+    <div class="spec-card warn">
+      <span class="sc-tag mono">Achtung Falle</span>
+      <p style="margin:10px 0 0;font-size:14px;">Ein erfolgreiches Schutzraum-Projekt kann man nicht in die Organisation „ausrollen", denn es ist ein lokales Phänomen.</p>
+    </div>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 05 · C3</span><span class="bm">b ® · 27</span></div>
+</section>
+
+
+<!-- ============================================================ LERNEN IN 3 AKTEN — REVIEW -->
+<section class="sheet" id="lernen-review">
+  <div class="bp-watermark" style="top:50px;left:-70px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 05 · C4 · REVIEW</span></div>
+    <div><span class="tb-rev">SHEET 24 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 05 · Akt I — Inhalt</div>
+  <h2 class="sub"><span class="dim mono">C4</span>Lernen in 3 Akten · Review</h2>
+
+  <p><b>1. Vorbereitung</b><br>Es wird ein Moderator organisiert und man lädt die Menschen ein, von denen man lernen kann.</p>
+  <p><b>2. Das Review</b></p>
+  <ul style="margin:0;padding-left:22px;font-size:15px;line-height:1.7;color:#e6f0f8;">
+    <li>Das Team zeigt den Inhalt, zu dem es Feedback braucht.</li>
+    <li>Die Feedbackgeber können Verständnisfragen zum Inhalt stellen.</li>
+    <li>Es wird Feedback gegeben.<br><span style="color:var(--accent-lt);font-weight:700;">ACHTUNG</span> — Ein Rat ist kein Befehl. &nbsp;<span style="color:var(--accent-lt);font-weight:700;">ACHTUNG</span> — Verantwortung bleibt beim Team.</li>
+    <li>Das Team kann Verständnisfragen zum Feedback stellen.<br><span style="color:var(--accent-lt);font-weight:700;">ACHTUNG</span> — keine Rechtfertigung.</li>
+  </ul>
+  <p style="margin-top:16px;"><b>3. Nach dem Review</b><br>Das Team entscheidet (alleine), welche Elemente übernommen werden.</p>
+
+  <div class="sheet-foot mono"><span>POS. 05 · C4 · REVIEW</span><span class="bm">b ® · 28</span></div>
+</section>
+
+
+<!-- ============================================================ LERNEN IN 3 AKTEN — RETRO -->
+<section class="sheet" id="lernen-retro">
+  <div class="bp-watermark" style="bottom:-40px;right:-60px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 05 · C4 · RETRO</span></div>
+    <div><span class="tb-rev">SHEET 25 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 05 · Akt II — Modus</div>
+  <h2 class="sub"><span class="dim mono">C4</span>Lernen in 3 Akten · Retro</h2>
+
+  <div class="grid2 skew">
+    <div>
+      <p><b>1. Vorbereitung</b><br>Es wird ein Moderator organisiert.</p>
+      <p><b>2. Die Retro</b></p>
+      <ul style="margin:0;padding-left:22px;font-size:15px;line-height:1.7;color:#e6f0f8;">
+        <li>Was war gut am Modus?</li>
+        <li>Was war nicht gut am Modus?</li>
+        <li>Wovon wollen wir mehr?</li>
+        <li>Wovon wollen wir weniger?</li>
+        <li>Was ändern wir konkret?</li>
+      </ul>
+      <p style="margin-top:16px;"><b>3. Nach der Retro</b><br>Das Team verändert den Modus konkret.</p>
+    </div>
+    <div class="drill-fig">
+      <svg viewBox="0 0 220 220" style="width:100%;height:auto;" fill="none" aria-hidden="true">
+        <rect x="10" y="10" width="200" height="200" stroke="var(--line)" stroke-width="1.4"/>
+        <line x1="110" y1="10" x2="110" y2="210" stroke="var(--line)" stroke-width="1.2"/>
+        <line x1="10" y1="110" x2="210" y2="110" stroke="var(--line)" stroke-width="1.2"/>
+        <line x1="10" y1="10" x2="210" y2="210" stroke="var(--line-faint)" stroke-width="1"/>
+        <line x1="210" y1="10" x2="10" y2="210" stroke="var(--line-faint)" stroke-width="1"/>
+        <text x="60" y="58" font-family="IBM Plex Mono" font-weight="700" font-size="13" text-anchor="middle" fill="var(--line)">GUT</text>
+        <text x="160" y="58" font-family="IBM Plex Mono" font-weight="700" font-size="12" text-anchor="middle" fill="var(--line)">SCHLECHT</text>
+        <text x="60" y="160" font-family="IBM Plex Mono" font-weight="700" font-size="13" text-anchor="middle" fill="var(--line)">MEHR</text>
+        <text x="160" y="160" font-family="IBM Plex Mono" font-weight="700" font-size="13" text-anchor="middle" fill="var(--line)">WENIGER</text>
+        <circle cx="110" cy="110" r="22" fill="rgba(234,124,19,.12)" stroke="var(--accent)" stroke-width="1.2"/>
+        <text x="110" y="113" font-family="IBM Plex Mono" font-weight="700" font-size="7.5" text-anchor="middle" fill="var(--accent-lt)">AUSPROBIEREN</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 05 · C4 · RETRO</span><span class="bm">b ® · 29</span></div>
+</section>
+
+
+<!-- ============================================================ LERNEN IN 3 AKTEN — FEEDBACK -->
+<section class="sheet" id="lernen-feedback">
+  <div class="bp-watermark" style="top:50px;right:-60px;width:300px;height:300px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 05 · C4 · FEEDBACK</span></div>
+    <div><span class="tb-rev">SHEET 26 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 05 · Akt III — Individuum</div>
+  <h2 class="sub"><span class="dim mono">C4</span>Lernen in 3 Akten · Feedback</h2>
+
+  <div class="grid2">
+    <div>
+      <div class="spec-card warn" style="margin-bottom:22px;">
+        <span class="sc-tag mono">Achtung</span>
+        <p style="margin:10px 0 0;font-size:15px;">Keine <b>DU</b>-Aussagen! <span style="color:var(--line-soft);">(musst / solltest / bist / kannst nicht …)</span></p>
+      </div>
+      <p>Feedback richtet sich auf <b>die eigene Wahrnehmung</b> und auf <b>den eigenen Wunsch</b>. Niemand wird belehrt — und niemand bekommt einen Befehl.</p>
+    </div>
+    <div class="spec-card">
+      <span class="sc-tag mono">PoWWW-Burger</span>
+      <div style="margin-top:10px;background:#1d4f8c22;border:1px solid var(--line-faint);border-radius:18px 18px 4px 4px;padding:8px;text-align:center;font-family:'IBM Plex Mono';font-weight:700;color:var(--accent-lt);font-size:12px;letter-spacing:.06em;">Positiver Einstieg</div>
+      <div style="padding:14px 6px;font-size:14px;line-height:1.6;color:#e6f0f8;">
+        Was habe ich <b style="color:var(--accent-lt);">W</b>ahrgenommen?<br>
+        <b style="color:var(--accent-lt);">W</b>irkung auf mich?<br>
+        Mein <b style="color:var(--accent-lt);">W</b>unsch
+      </div>
+      <div style="background:#1d4f8c22;border:1px solid var(--line-faint);border-radius:4px 4px 18px 18px;padding:8px;text-align:center;font-family:'IBM Plex Mono';font-weight:700;color:var(--accent-lt);font-size:12px;letter-spacing:.06em;">Ergebnis</div>
+    </div>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 05 · C4 · FEEDBACK</span><span class="bm">b ® · 30</span></div>
+</section>
+
+
+<!-- ============================================================ NO-GOS & DO-SOS — Opener -->
+<section class="sheet" id="nogos">
+  <div class="bp-watermark" style="top:-30px;right:-50px;width:380px;height:380px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 06 · NO-GOS / DO-SOS</span></div>
+    <div><span class="tb-rev">SHEET 27 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 06 · Prüfprotokoll</div>
+  <h1 class="sec">Führung · <span class="or">No-gos</span> &amp; Do-sos</h1>
+  <p class="lead">Alles bisher Gesagte ist viel zu viel für den Montagmorgen. Hier die Kurzfassung: was du als botek-Führungskraft tunlichst <b>lassen</b> solltest — und was du dafür <b>tun</b> kannst. Keine Regel. Eine Orientierung.</p>
+
+  <div class="balance">
+    <div class="panel nogo">
+      <div class="ptag mono">No-gos</div>
+      <ul>
+        <li><span><b>Vorgaben statt Probleme.</b> Aufgaben verteilen, ohne klarzustellen, welches Kundenproblem dahintersteht.</span></li>
+        <li><span><b>Macht als Standard.</b> Bei jeder Reibung die Stelle ziehen, statt das Problem zu durchdringen.</span></li>
+        <li><span><b>Konsens-Hochzeit.</b> Diskussionen so lange laufen lassen, bis alle erschöpft „ja" sagen.</span></li>
+        <li><span><b>Reporting statt Transparenz.</b> Zahlen einsammeln, weil sie dich beruhigen.</span></li>
+        <li><span><b>Endmonster bauen.</b> Aus jedem kleinen Problem ein bereichsübergreifendes Großprojekt machen.</span></li>
+      </ul>
+    </div>
+    <div class="panel doso">
+      <div class="ptag mono">Do-sos</div>
+      <ul>
+        <li><span><b>Frag nach dem Problem.</b> „Welches Kundenproblem lösen wir hier gerade?" — vor jedem Termin.</span></li>
+        <li><span><b>Trenne Stelle und Person.</b> Macht ist ein Werkzeug, kein Wesenszug.</span></li>
+        <li><span><b>Entscheide klar.</b> Konsultativer Einzelentscheid schlägt erschöpften Scheinkonsens.</span></li>
+        <li><span><b>Mach Information öffentlich.</b> Damit andere lernen, nicht damit du dich absicherst.</span></li>
+        <li><span><b>Schneide das Problem klein.</b> Lieber 5 echte Experimente als ein perfekter Masterplan.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sheet-foot mono"><span>POS. 06 · CHEAT-SHEET</span><span class="bm">b ® · 32</span></div>
+</section>
+
+
+<!-- ============================================================ NO-GOS & DO-SOS — Vertiefung -->
+<section class="sheet" id="nogos-2">
+  <div class="bp-watermark" style="bottom:-50px;left:-60px;width:320px;height:320px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 06 · VERTIEFUNG</span></div>
+    <div><span class="tb-rev">SHEET 28 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 06 · Im Konflikt · im Team · an der Maschine</div>
+  <h1 class="sec">Führung · <span class="or">No-gos</span> &amp; Do-sos</h1>
+
+  <div class="balance">
+    <div class="panel nogo">
+      <div class="ptag mono">No-gos</div>
+      <ul>
+        <li><span><b>Schuldige suchen.</b> „Wer war's?" rettet keinen Werkzeug-Riss.</span></li>
+        <li><span><b>Helden feiern.</b> Wer dauerhaft brennt, brennt aus — und du verstehst dein System nicht.</span></li>
+        <li><span><b>Blaue Antwort auf rote Frage.</b> Standardprozess da auflegen, wo gerade nichts standardisierbar ist.</span></li>
+        <li><span><b>Stammtischführung.</b> In der Kaffeeküche meckern, im Meeting nicken.</span></li>
+        <li><span><b>Mit DU-Botschaften feedbacken.</b> „Du musst …" / „Du kannst nicht …" — der schnellste Weg, das Gespräch zu beenden.</span></li>
+      </ul>
+    </div>
+    <div class="panel doso">
+      <div class="ptag mono">Do-sos</div>
+      <ul>
+        <li><span><b>Frag „warum konnte das passieren?"</b> Strukturen, nicht Personen.</span></li>
+        <li><span><b>Bau Schutzräume.</b> Ein Problem, freiwillige Könner, ein Mächtiger, der den Rücken freihält.</span></li>
+        <li><span><b>Sortiere rot / blau.</b> Stacey hilft: WIE-Fragen brauchen Prozess, WER-Fragen brauchen Können.</span></li>
+        <li><span><b>Direkt &amp; einmal.</b> Was du im Meeting nicht sagst, sage es im Meeting — oder nie.</span></li>
+        <li><span><b>Sprich aus eigener Wahrnehmung.</b> „Ich habe wahrgenommen … / Wirkung auf mich … / Mein Wunsch …"</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="note mono" style="margin-top:24px;">Diese Listen sind kein Gesetzbuch. Sie sind ein <b style="color:var(--line);">Spiegel</b>: lies sie alle drei Monate noch einmal durch und frag dich, an welcher Stelle <i>du</i> aktuell hängst. Das ist der nächste Hebel.</p>
+
+  <div class="sheet-foot mono"><span>POS. 06 · VERTIEFUNG</span><span class="bm">b ® · 33</span></div>
+</section>
+
+
+<!-- ============================================================ BOTEK AKADEMIE -->
+<section class="sheet" id="akademie">
+  <div class="bp-watermark" style="top:-40px;right:-60px;width:460px;height:460px;">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#drillsym"/></svg>
+  </div>
+  <div class="titleblock mono">
+    <div class="tb-l"><img class="tb-logo" src="assets/logo-botek.png" alt="botek"><span><b>BK-FK-001</b></span><span>POS. 07 · AKADEMIE</span></div>
+    <div><span class="tb-rev">SHEET 29 / REV A</span></div>
+  </div>
+
+  <div class="kicker mono">Pos. 07 · Schlussblatt</div>
+  <h1 class="sec">Über uns…</h1>
+
+  <div class="grid2 skew" style="align-items:start;">
+    <div>
+      <p>Seit Jahrzehnten teilen wir bei <b>botek Präzisionsbohrtechnik</b> unser Wissen über tiefes Bohren erfolgreich mit unseren Kunden weltweit. Was im Werkstoff funktioniert, gilt auch in der Organisation: gerade, präzise und mit dem richtigen Schnitt.</p>
+      <p>2025 haben wir uns als Firma vorgenommen, die <b>Transformation von Führung &amp; Zusammenarbeit</b> bewusst zu gestalten. Wir haben bereits einen spannenden Weg mit vielen Veränderungen zurückgelegt — gleichzeitig haben wir noch ein ganzes Stück vor uns.</p>
+      <p>Nachdem unser Angebot an Schulungen, Workshops und Events stetig gewachsen ist, haben wir <b>2026</b> offiziell die <b>botek Akademie</b> gegründet — als Heimat für alles, was wir lernen und weitergeben wollen.</p>
+    </div>
+    <div>
+      <div class="contact-card">
+        <h3>So erreichen Sie uns…</h3>
+        <div class="r"><b>botek Akademie</b></div>
+        <div class="r">botek Präzisionsbohrtechnik GmbH</div>
+        <div class="r">Längenfeldstraße 4</div>
+        <div class="r">72585 Riederich</div>
+        <div class="r" style="margin-top:10px;">akademie@botek.de</div>
+        <div class="r">www.botek.de</div>
+      </div>
+      <div class="contact-card" style="margin-top:14px;border-top:4px solid var(--anthra);">
+        <h3 style="color:#aebcc8;">Im Auftrag von</h3>
+        <div class="r"><b>V&amp;S Unternehmerberatung</b></div>
+        <div class="r">Texte &amp; Inhalte: V&amp;S Team</div>
+        <div class="r">Layout &amp; Design: V&amp;S</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="imprint mono">
+    Erscheinungsjahr 2026 // 1. Auflage // Copyright botek Präzisionsbohrtechnik GmbH<br>
+    Alle Rechte, insbesondere das Recht auf Vervielfältigung und Verbreitung sowie der Übersetzung, vorbehalten.<br>
+    Entwurf in Anlehnung an „So denken wir Führungskräfte bei Herding" der Herding Akademie.
+  </div>
+
+  <div class="sheet-foot mono"><span>botek Präzisionsbohrtechnik GmbH · www.botek.de</span><span class="bm">b ® · 34</span></div>
+</section>
+
+
+<!-- ============================================================ GALLERY NAV (screen only) -->
+<nav class="gallery-nav" aria-label="Design-Galerie">
+  <div class="gh mono">// botek Führungs-Booklet · Design-Galerie</div>
+  <div class="gl">
+    <a href="index.html">Übersicht</a>
+    <a href="design-alternative-1.html" class="active">Design-Alternative-1</a>
+    <a href="design-alternative-2.html">Design-Alternative-2</a>
+    <a href="design-alternative-3.html">Design-Alternative-3</a>
+    <a href="design-alternative-4.html">Design-Alternative-4</a>
+    <a href="design-alternative-5.html">Design-Alternative-5</a>
+    <a href="design-alternative-6.html">Design-Alternative-6</a>
+    <a href="design-alternative-7.html">Design-Alternative-7</a>
+    <a href="design-alternative-8.html">Design-Alternative-8</a>
+    <a href="design-alternative-9.html">Design-Alternative-9</a>
+    <a href="design-alternative-10.html">Design-Alternative-10</a>
+    <a href="Botek_Booklet.pdf" class="pdf">Original-Booklet (PDF)</a>
+  </div>
+  <div class="brandline mono">botek Präzisionsbohrtechnik GmbH · www.botek.de</div>
+</nav>
+
+</body>
+</html>

@@ -1,0 +1,1352 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>So denken wir Führungskräfte bei botek — Bauhaus Geometrisch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     DESIGN-ALTERNATIVE 6 — "BAUHAUS GEOMETRISCH"
+     Bohrer-Querschnitt-Kreise als Bauhaus-Komposition.
+     Orange + Anthrazit + Weiss. Bold, grafisch, markant.
+     Inhalt OHNE JS sichtbar. Sauberer A4-Print-Stylesheet.
+     ============================================================ */
+
+  :root{
+    --orange:    #ea7c13;
+    --orange-lt: #ff9d00;
+    --ink:       #363839;
+    --ink-2:     #444444;
+    --grey:      #f5f5f5;
+    --white:     #ffffff;
+    --blue:      #1f3a64;
+    --red:       #cf2e2e;
+    --line:      #363839;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--grey);
+    color:var(--ink);
+    font-family:"Archivo","Helvetica Neue",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    line-height:1.6;
+  }
+
+  /* ---------- BAUHAUS PRIMITIVES ---------- */
+  .mono{ font-family:"Space Mono",monospace; }
+  .black{ font-family:"Archivo Black","Archivo",sans-serif; }
+
+  /* The recurring drill-cross-section circle motif, inlined & recolorable */
+  .drill{ display:block; color:inherit; }
+  .drill svg{ width:100%; height:100%; display:block; }
+
+  /* ---------- LAYOUT SHELL ---------- */
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+
+  /* ====================================================
+     COVER
+     ==================================================== */
+  .cover{
+    position:relative;
+    background:var(--ink);
+    color:var(--white);
+    overflow:hidden;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  /* Bauhaus composition layer behind cover */
+  .cover .compo{
+    position:absolute; inset:0; pointer-events:none; overflow:hidden;
+  }
+  .cover .compo svg{ position:absolute; }
+  .shape{ position:absolute; }
+
+  .cover-top{
+    position:relative; z-index:3;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:30px 28px;
+    max-width:1180px; margin:0 auto; width:100%;
+  }
+  .cover-top .brand{
+    display:flex; align-items:center; gap:18px;
+  }
+  .cover-top .brand img{ height:30px; width:auto; display:block;
+    filter:brightness(0) invert(1); }
+  .cover-top .brand .akad{
+    font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.42em;
+    text-transform:uppercase; color:var(--orange-lt);
+    border-left:2px solid var(--orange); padding-left:14px;
+  }
+  .cover-top .reg{ font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.3em; color:#bdbdbd; }
+
+  .cover-stage{
+    position:relative; z-index:3;
+    flex:1 1 auto; display:flex; align-items:center;
+    max-width:1180px; margin:0 auto; width:100%; padding:10px 28px 60px;
+  }
+  .cover-title{ max-width:880px; }
+  .cover-kicker{
+    display:inline-block;
+    font-family:"Space Mono",monospace; font-size:13px; letter-spacing:.34em;
+    text-transform:uppercase; color:var(--ink);
+    background:var(--orange); padding:8px 16px; margin-bottom:30px;
+  }
+  .cover h1{
+    font-family:"Archivo Black",sans-serif;
+    font-size:clamp(46px,8.4vw,108px);
+    line-height:.92; margin:0; letter-spacing:-.02em;
+    text-transform:uppercase;
+  }
+  .cover h1 .o{ color:var(--orange-lt); }
+  .cover h1 .block{ display:block; }
+  .cover .subtitle{
+    margin-top:34px;
+    font-family:"Space Mono",monospace;
+    font-size:clamp(14px,1.7vw,20px);
+    letter-spacing:.22em; text-transform:uppercase; color:#e6e6e6;
+  }
+  .cover .subtitle b{ color:var(--orange-lt); font-weight:700; }
+
+  .cover-foot{
+    position:relative; z-index:3;
+    border-top:1px solid rgba(255,255,255,.18);
+    padding:20px 28px; max-width:1180px; margin:0 auto; width:100%;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.2em;
+    color:#9a9a9a; text-transform:uppercase;
+  }
+  .cover-foot .bdot{
+    width:46px; height:46px; border-radius:50%; background:var(--orange);
+    color:var(--ink); display:grid; place-items:center;
+    font-family:"Archivo Black",sans-serif; font-size:22px;
+  }
+  .cover-foot .bdot sup{ font-size:10px; }
+
+  /* ====================================================
+     SECTION SCAFFOLD
+     ==================================================== */
+  section.sheet{
+    position:relative;
+    padding:74px 0 70px;
+    border-bottom:3px solid var(--ink);
+  }
+  section.sheet.dark{ background:var(--ink); color:var(--white); }
+  section.sheet.orange{ background:var(--orange); color:var(--ink); }
+  section.sheet.paper{ background:var(--white); }
+  section.sheet.grey{ background:var(--grey); }
+
+  /* background drill watermark per section */
+  .watermark{
+    position:absolute; pointer-events:none; opacity:.06; z-index:0;
+  }
+  .watermark.tr{ top:-90px; right:-90px; width:380px; height:380px; }
+  .watermark.bl{ bottom:-110px; left:-110px; width:440px; height:440px; }
+  section.sheet > .wrap{ position:relative; z-index:1; }
+
+  /* chapter eyebrow band */
+  .eyebrow{
+    display:flex; align-items:center; gap:18px; margin-bottom:10px;
+  }
+  .eyebrow .num{
+    font-family:"Archivo Black",sans-serif;
+    font-size:15px; letter-spacing:.04em;
+    background:var(--ink); color:var(--white);
+    width:46px; height:46px; border-radius:50%;
+    display:grid; place-items:center; flex:0 0 auto;
+  }
+  section.sheet.dark .eyebrow .num{ background:var(--orange); color:var(--ink); }
+  section.sheet.orange .eyebrow .num{ background:var(--ink); color:var(--white); }
+  .eyebrow .tag{
+    font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.34em;
+    text-transform:uppercase; color:var(--orange);
+  }
+  section.sheet.orange .eyebrow .tag{ color:var(--ink); }
+  section.sheet.dark .eyebrow .tag{ color:var(--orange-lt); }
+
+  h2.chap{
+    font-family:"Archivo Black",sans-serif;
+    font-size:clamp(32px,5.2vw,62px); line-height:.96; margin:0 0 8px;
+    text-transform:uppercase; letter-spacing:-.015em;
+  }
+  h2.chap .o{ color:var(--orange); }
+  section.sheet.orange h2.chap .o{ color:var(--white); }
+  section.sheet.dark h2.chap .o{ color:var(--orange-lt); }
+
+  h3.sub{
+    font-family:"Archivo",sans-serif; font-weight:900;
+    font-size:clamp(20px,2.6vw,30px); line-height:1.04;
+    margin:0 0 14px; text-transform:uppercase; letter-spacing:-.01em;
+  }
+  h3.sub .o{ color:var(--orange); }
+
+  .rule{
+    height:6px; width:100%;
+    background:repeating-linear-gradient(90deg,var(--ink) 0 28px,transparent 28px 40px);
+    margin:14px 0 30px;
+  }
+  section.sheet.dark .rule{ background:repeating-linear-gradient(90deg,var(--orange) 0 28px,transparent 28px 40px); }
+  section.sheet.orange .rule{ background:repeating-linear-gradient(90deg,var(--ink) 0 28px,transparent 28px 40px); }
+
+  .lede{
+    font-size:clamp(18px,2.1vw,23px); line-height:1.42; font-weight:800;
+    max-width:62ch; margin:0 0 22px;
+  }
+  p{ margin:0 0 14px; max-width:66ch; font-size:16.5px; }
+  p b, p strong{ font-weight:800; }
+  .cols-2 p{ max-width:none; }
+
+  /* generic two-col */
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:46px; align-items:start; }
+  .grid2.tight{ gap:34px; }
+  .grid12{ display:grid; grid-template-columns:1.3fr 1fr; gap:46px; align-items:center; }
+
+  /* ====================================================
+     INHALTSVERZEICHNIS
+     ==================================================== */
+  .toc-grid{ display:grid; grid-template-columns:1fr 1fr; gap:6px 60px; }
+  .toc-h{
+    display:flex; align-items:baseline; gap:12px; padding:12px 0 6px;
+    font-family:"Archivo Black",sans-serif; font-size:19px; text-transform:uppercase;
+    border-bottom:3px solid var(--ink);
+  }
+  .toc-h .pg{ margin-left:auto; color:var(--orange); }
+  .toc-row{
+    display:flex; align-items:baseline; gap:10px; padding:7px 0 7px 16px;
+    font-size:15px; border-bottom:1px solid rgba(54,56,57,.16);
+  }
+  .toc-row .dots{ flex:1 1 auto; border-bottom:2px dotted rgba(54,56,57,.4); margin:0 6px 4px; height:0; }
+  .toc-row .pg{ font-family:"Space Mono",monospace; color:var(--ink-2); }
+  .toc-group{
+    margin-top:22px; font-family:"Space Mono",monospace; font-size:13px;
+    letter-spacing:.3em; text-transform:uppercase; color:var(--orange);
+    padding-bottom:4px;
+  }
+
+  /* ====================================================
+     PROBLEMLÖSUNGSKREIS — circular composition
+     ==================================================== */
+  .ring-wrap{ position:relative; width:100%; max-width:380px; margin:0 auto; aspect-ratio:1/1; }
+  .ring-wrap svg{ width:100%; height:100%; }
+
+  .steps{ display:grid; gap:14px; counter-reset:s; }
+  .step{
+    display:grid; grid-template-columns:64px 1fr; gap:18px; align-items:start;
+    background:var(--white); border:3px solid var(--ink); padding:16px 18px;
+  }
+  .step .bub{
+    width:54px; height:54px; border-radius:50%;
+    background:var(--orange); color:var(--ink);
+    font-family:"Archivo Black",sans-serif; font-size:20px;
+    display:grid; place-items:center;
+  }
+  .step.alt .bub{ background:var(--ink); color:var(--white); }
+  .step h4{ margin:0 0 5px; font-size:17px; font-weight:900; text-transform:uppercase; letter-spacing:-.01em; }
+  .step p{ margin:0; font-size:14.5px; line-height:1.5; max-width:none; }
+
+  /* ====================================================
+     STACEY MATRIX (Bauhaus blocks)
+     ==================================================== */
+  .stacey-pair{ display:grid; grid-template-columns:1fr 1fr; gap:0; border:3px solid var(--ink); }
+  .stacey-pair .col{ padding:22px 24px; }
+  .stacey-pair .col.blue{ background:var(--blue); color:#fff; }
+  .stacey-pair .col.red{ background:var(--red); color:#fff; border-left:3px solid var(--ink); }
+  .stacey-pair .col .h{ font-family:"Archivo Black",sans-serif; font-size:26px; margin-bottom:12px; letter-spacing:.04em; }
+  .stacey-pair .col ul{ margin:0; padding:0; list-style:none; }
+  .stacey-pair .col li{ padding:5px 0; font-size:15px; font-weight:700; border-top:1px solid rgba(255,255,255,.22); }
+  .stacey-pair .col li:first-child{ border-top:0; }
+
+  .matrix{
+    position:relative; border:3px solid var(--ink); aspect-ratio:1/.82;
+    background:
+      linear-gradient(135deg, #ffe3cf 0%, #f6a85f 38%, var(--orange) 64%, #b85e07 100%);
+  }
+  .matrix .quad{ position:absolute; font-family:"Archivo Black",sans-serif; font-size:14px; text-transform:uppercase; }
+  .matrix .q-ein{ left:10%; bottom:14%; color:var(--blue); }
+  .matrix .q-komp{ left:34%; top:42%; color:var(--blue); }
+  .matrix .q-kx{ right:18%; top:24%; color:#fff; }
+  .matrix .q-ch{ right:8%; top:8%; color:var(--ink); font-style:italic; }
+  .matrix .axis-x{ position:absolute; bottom:-26px; left:0; right:0; display:flex; justify-content:space-between; font-family:"Space Mono",monospace; font-size:11px; }
+  .matrix .axis-y{ position:absolute; top:0; bottom:0; left:-30px; writing-mode:vertical-rl; transform:rotate(180deg); display:flex; justify-content:space-between; font-family:"Space Mono",monospace; font-size:11px; }
+
+  /* ====================================================
+     BLAUE / ROTE FALLE bars
+     ==================================================== */
+  .falle{ display:grid; gap:26px; max-width:420px; }
+  .falle .bar{ position:relative; }
+  .falle .bar .split{ display:flex; height:64px; border:3px solid var(--ink); }
+  .falle .bar .split span{ flex:1; }
+  .falle .bar .bl{ background:var(--blue); }
+  .falle .bar .rd{ background:var(--red); }
+  .falle .bar .lab{ font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; display:flex; justify-content:space-between; margin-top:6px; color:var(--ink); }
+
+  /* ====================================================
+     QUOTE
+     ==================================================== */
+  blockquote{
+    margin:24px 0; padding:26px 30px; background:var(--ink); color:var(--white);
+    position:relative; border-left:10px solid var(--orange);
+  }
+  section.sheet.dark blockquote{ background:#000; }
+  section.sheet.orange blockquote{ background:var(--ink); }
+  blockquote p{ font-size:clamp(18px,2.2vw,25px); font-weight:800; line-height:1.34; margin:0; max-width:none; font-style:italic; }
+  blockquote cite{ display:block; margin-top:16px; font-family:"Space Mono",monospace; font-style:normal; font-size:13px; letter-spacing:.16em; color:var(--orange-lt); text-transform:uppercase; }
+  blockquote .src{ margin-top:8px; font-size:11.5px; color:#9a9a9a; font-family:"Space Mono",monospace; }
+
+  /* ====================================================
+     CALLOUT / BOX VARIANTS
+     ==================================================== */
+  .box{ border:3px solid var(--ink); padding:20px 22px; background:var(--white); }
+  .box.fill-ink{ background:var(--ink); color:#fff; }
+  .box.fill-orange{ background:var(--orange); color:var(--ink); }
+  .box .lbl{ font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--orange); margin-bottom:10px; }
+  .box.fill-orange .lbl{ color:var(--ink); }
+  .box.fill-ink .lbl{ color:var(--orange-lt); }
+  .box ul{ margin:0; padding-left:20px; }
+  .box li{ padding:4px 0; font-size:15px; }
+  .box.danger{ border-color:var(--red); }
+  .box.danger .lbl{ color:var(--red); }
+
+  .bigstate{
+    font-family:"Archivo Black",sans-serif; font-size:clamp(22px,3vw,34px);
+    line-height:1.06; text-transform:uppercase; letter-spacing:-.01em; margin:6px 0 18px;
+  }
+  .bigstate .o{ color:var(--orange); }
+
+  /* tools list */
+  .tools{ border:3px solid var(--ink); }
+  .tool{ display:grid; grid-template-columns:230px 1fr; gap:18px; padding:16px 20px; border-top:3px solid var(--ink); align-items:center; }
+  .tool:first-child{ border-top:0; }
+  .tool:nth-child(even){ background:var(--grey); }
+  .tool .nm{ font-family:"Archivo Black",sans-serif; font-size:16px; text-transform:uppercase; color:var(--orange); }
+  .tool .ds{ font-size:15px; }
+
+  /* konsent thumbs */
+  .konsent{ display:grid; gap:0; border:3px solid var(--ink); }
+  .konsent .row{ display:grid; grid-template-columns:80px 1fr; gap:18px; align-items:center; padding:16px 20px; border-top:3px solid var(--ink); }
+  .konsent .row:first-child{ border-top:0; }
+  .konsent .row .ic{ font-size:38px; text-align:center; }
+  .konsent .row b{ font-weight:900; }
+
+  /* formate chips */
+  .formate{ display:flex; flex-wrap:wrap; gap:14px; margin-top:20px; }
+  .chip{
+    display:flex; align-items:center; gap:14px; padding:16px 22px;
+    border:3px solid var(--ink); background:var(--white);
+    font-family:"Archivo Black",sans-serif; font-size:18px; text-transform:uppercase;
+  }
+  .chip .n{ width:34px; height:34px; border-radius:50%; background:var(--orange); color:var(--ink); display:grid; place-items:center; font-size:16px; }
+  .chip.plus{ background:var(--ink); color:#fff; }
+  .chip.plus .n{ background:#fff; color:var(--ink); }
+
+  /* no-go / do-so panels */
+  .balance{ display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:26px; }
+  .pnl{ border:3px solid var(--ink); background:var(--white); padding:0; }
+  .pnl .ph{ font-family:"Archivo Black",sans-serif; font-size:22px; text-transform:uppercase; padding:14px 20px; color:#fff; }
+  .pnl.no .ph{ background:var(--red); }
+  .pnl.do .ph{ background:var(--orange); color:var(--ink); }
+  .pnl ul{ margin:0; padding:0 20px 12px; list-style:none; }
+  .pnl li{ display:grid; grid-template-columns:24px 1fr; gap:10px; padding:12px 0; border-top:1px solid rgba(54,56,57,.16); font-size:14.5px; line-height:1.4; }
+  .pnl li:first-child{ border-top:0; }
+  .pnl.no li::before{ content:"✕"; color:var(--red); font-weight:900; font-size:17px; }
+  .pnl.do li::before{ content:"●"; color:var(--orange); font-size:15px; }
+
+  /* PoWWW burger */
+  .burger{ background:var(--ink); color:#fff; padding:24px; border:3px solid var(--ink); }
+  .burger .pill{ display:inline-block; background:var(--orange); color:var(--ink); padding:6px 14px; font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase; margin-bottom:16px; }
+  .burger .bun{ background:#f5c97b; color:var(--ink); font-family:"Archivo Black",sans-serif; padding:12px; text-align:center; font-size:15px; }
+  .burger .bun.top{ border-radius:30px 30px 4px 4px; }
+  .burger .bun.bot{ border-radius:4px 4px 30px 30px; }
+  .burger .fill{ background:#fff8ec; color:var(--ink); padding:16px; text-align:center; font-size:15px; line-height:1.6; }
+  .burger .fill .o{ color:var(--orange); font-family:"Archivo Black",sans-serif; }
+
+  /* retro 2x2 */
+  .retro{ display:grid; grid-template-columns:1fr 1fr; border:3px solid var(--ink); aspect-ratio:1/1; }
+  .retro div{ display:grid; place-items:center; font-family:"Archivo Black",sans-serif; font-size:18px; text-transform:uppercase; border:1.5px solid var(--ink); position:relative; }
+  .retro .c{ position:absolute; inset:0; display:grid; place-items:center; }
+
+  /* about */
+  .about-card{ border:3px solid var(--ink); padding:22px 24px; background:var(--white); }
+  .about-card h4{ font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.26em; text-transform:uppercase; color:var(--orange); margin:0 0 12px; }
+  .about-card .r{ font-size:15px; padding:2px 0; }
+  .imprint{ margin-top:26px; font-family:"Space Mono",monospace; font-size:11.5px; line-height:1.7; color:var(--ink-2); }
+
+  /* product photo accents */
+  .photo-accent{ border:3px solid var(--ink); display:block; width:100%; height:auto; filter:grayscale(.15) contrast(1.05); }
+  .photo-frame{ position:relative; }
+  .photo-frame .cap{ position:absolute; bottom:0; left:0; background:var(--orange); color:var(--ink); font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.12em; padding:5px 10px; text-transform:uppercase; }
+
+  /* ====================================================
+     FOOTER / GALLERY NAV
+     ==================================================== */
+  footer.gallery{
+    background:var(--ink); color:#fff; padding:54px 0 60px;
+  }
+  footer.gallery .wrap{ position:relative; }
+  footer.gallery .ft-top{ display:flex; align-items:center; gap:20px; margin-bottom:30px; flex-wrap:wrap; }
+  footer.gallery .ft-top img{ height:26px; filter:brightness(0) invert(1); }
+  footer.gallery .ft-top .t{ font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.3em; text-transform:uppercase; color:#9a9a9a; }
+  .nav-grid{ display:flex; flex-wrap:wrap; gap:12px; }
+  .nav-grid a{
+    font-family:"Space Mono",monospace; font-size:13px; letter-spacing:.06em;
+    text-decoration:none; color:#fff; border:2px solid #5a5c5d;
+    padding:10px 16px; transition:.15s; text-transform:uppercase;
+  }
+  .nav-grid a:hover{ border-color:var(--orange); color:var(--orange-lt); }
+  .nav-grid a.active{ background:var(--orange); color:var(--ink); border-color:var(--orange); font-weight:700; }
+  .nav-grid a.pdf{ border-color:var(--orange-lt); color:var(--orange-lt); }
+  .ft-contact{ margin-top:32px; padding-top:20px; border-top:1px solid rgba(255,255,255,.16); font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.14em; color:#9a9a9a; text-transform:uppercase; }
+
+  /* responsive */
+  @media (max-width:820px){
+    .grid2,.grid12{ grid-template-columns:1fr; gap:30px; }
+    .toc-grid{ grid-template-columns:1fr; }
+    .stacey-pair,.balance{ grid-template-columns:1fr; }
+    .stacey-pair .col.red{ border-left:0; border-top:3px solid var(--ink); }
+    .tool{ grid-template-columns:1fr; gap:6px; }
+  }
+
+  /* ============================================================
+     PRINT — A4, page breaks, colors, hide nav/anim
+     ============================================================ */
+  @media print{
+    @page{ size:A4; margin:14mm 14mm 16mm; }
+    html,body{ background:#fff !important; color:#000; }
+    body{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+    .wrap{ max-width:none; padding:0; }
+    footer.gallery, .cover-foot .bdot{ display:none !important; }
+    .watermark{ opacity:.05 !important; }
+
+    /* cover as its own page */
+    .cover{ min-height:auto; page-break-after:always; background:var(--ink) !important; }
+    .cover h1{ font-size:52px; }
+    .cover .subtitle{ font-size:14px; }
+
+    section.sheet{
+      page-break-before:always;
+      break-inside:auto;
+      padding:0 0 10mm;
+      border-bottom:none;
+    }
+    section.sheet.dark, section.sheet.orange{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+    /* keep headings with their content */
+    .eyebrow, h2.chap, h3.sub{ break-after:avoid; page-break-after:avoid; }
+    .step, .box, blockquote, .tool, .konsent .row, .chip, .pnl, .stacey-pair,
+    .about-card, .ring-wrap, .matrix, .burger, .retro, .falle .bar{
+      break-inside:avoid; page-break-inside:avoid;
+    }
+    .balance, .grid2, .grid12{ break-inside:avoid; }
+
+    p, li{ font-size:11pt; }
+    .lede{ font-size:13pt; }
+    blockquote p{ font-size:14pt; }
+    h2.chap{ font-size:30pt; }
+    h3.sub{ font-size:17pt; }
+
+    a{ color:inherit; text-decoration:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER ==================== -->
+<header class="cover">
+  <div class="compo" aria-hidden="true">
+    <!-- Bauhaus composition: drill-cross-section circles, segments, dots -->
+    <!-- large orange filled circle, top-right -->
+    <div class="shape" style="top:-160px; right:-120px; width:520px; height:520px; color:var(--orange);">
+      <div class="drill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="60" cy="60" r="52" fill="var(--orange)" stroke="none"/>
+        <path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="#363839" fill-opacity="0.9" stroke="none"/>
+        <circle cx="84" cy="74" r="7" fill="#363839" stroke="none"/>
+        <circle cx="74" cy="90" r="4.5" fill="#363839" stroke="none"/>
+        <circle cx="60" cy="60" r="3" fill="#363839" stroke="none"/>
+      </svg></div>
+    </div>
+    <!-- outline drill ring, mid-left -->
+    <div class="shape" style="bottom:60px; left:-140px; width:420px; height:420px; color:rgba(255,157,0,.55);">
+      <div class="drill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.4">
+        <circle cx="60" cy="60" r="52"/>
+        <path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" stroke="currentColor"/>
+        <path d="M60 8 L60 60 L14.97 86" stroke-width="1.8"/>
+        <circle cx="84" cy="74" r="7"/><circle cx="74" cy="90" r="4.5"/>
+      </svg></div>
+    </div>
+    <!-- half-disc bauhaus -->
+    <svg style="top:auto; bottom:-60px; right:18%; width:170px; height:340px;" viewBox="0 0 100 200">
+      <path d="M100 0 A100 100 0 0 0 100 200 Z" fill="var(--orange)" opacity=".85"/>
+    </svg>
+    <!-- small dotted segment -->
+    <svg style="top:38%; left:30%; width:140px; height:140px;" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2" stroke-dasharray="5 9"/>
+    </svg>
+  </div>
+
+  <div class="cover-top">
+    <div class="brand">
+      <img src="assets/logo-botek.png" alt="botek">
+      <span class="akad">Akademie</span>
+    </div>
+    <span class="reg">b&nbsp;&reg;</span>
+  </div>
+
+  <div class="cover-stage">
+    <div class="cover-title">
+      <span class="cover-kicker">Bauhaus · Geometrisch</span>
+      <h1>
+        <span class="block">So denken wir</span>
+        <span class="block"><span class="o">Führungs&shy;kräfte</span></span>
+        <span class="block">bei botek</span>
+      </h1>
+      <div class="subtitle">Führung &nbsp;·&nbsp; <b>Transformation</b> &nbsp;·&nbsp; Wertschöpfung</div>
+    </div>
+  </div>
+
+  <div class="cover-foot">
+    <span>botek Präzisionsbohrtechnik GmbH · www.botek.de</span>
+    <span class="bdot">b<sup>&reg;</sup></span>
+  </div>
+</header>
+
+
+<!-- ==================== INHALTSVERZEICHNIS ==================== -->
+<section class="sheet grey" id="toc">
+  <div class="watermark tr" style="color:var(--orange);"><div class="drill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2"><circle cx="60" cy="60" r="52"/><path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="currentColor" fill-opacity="0.4"/><path d="M60 8 L60 60 L14.97 86" stroke-width="2.5"/><circle cx="84" cy="74" r="7"/><circle cx="74" cy="90" r="4.5"/></svg></div></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">00</span><span class="tag">Index</span></div>
+    <h2 class="chap">Inhalts&shy;<span class="o">verzeichnis</span></h2>
+    <div class="rule"></div>
+
+    <div class="toc-grid">
+      <div>
+        <div class="toc-h"><span>Unsere Motivation</span><span class="pg">01</span></div>
+        <div class="toc-h"><span>Der Problemlösungskreis</span><span class="pg">02</span></div>
+        <div class="toc-h"><span>Hürden &amp; Stolpersteine</span><span class="pg">06</span></div>
+        <div class="toc-row"><span>Interne Referenz</span><span class="dots"></span><span class="pg">07</span></div>
+        <div class="toc-row"><span>Macht is a bitch</span><span class="dots"></span><span class="pg">08</span></div>
+        <div class="toc-row"><span>Blaue &amp; Rote Falle</span><span class="dots"></span><span class="pg">09</span></div>
+        <div class="toc-row"><span>Das Endmonster</span><span class="dots"></span><span class="pg">10</span></div>
+        <div class="toc-row"><span>Konsensfalle &amp; Stammtisch</span><span class="dots"></span><span class="pg">11</span></div>
+        <div class="toc-row"><span>Verantwortungsdiebstahl</span><span class="dots"></span><span class="pg">12</span></div>
+        <div class="toc-row"><span>Schulden &amp; Helden</span><span class="dots"></span><span class="pg">12</span></div>
+        <div class="toc-row"><span>Motivationsfalle</span><span class="dots"></span><span class="pg">13</span></div>
+        <div class="toc-row"><span>Gehorsamsfalle</span><span class="dots"></span><span class="pg">13</span></div>
+        <div class="toc-group">Denkmodelle</div>
+        <div class="toc-row"><span>Primat der Wertschöpfung</span><span class="dots"></span><span class="pg">15</span></div>
+        <div class="toc-row"><span>Stacey-Matrix · Rot &amp; Blau</span><span class="dots"></span><span class="pg">16</span></div>
+        <div class="toc-row"><span>Zentrum &amp; Peripherie</span><span class="dots"></span><span class="pg">17</span></div>
+      </div>
+      <div>
+        <div class="toc-row" style="margin-top:55px;"><span>Steuern &amp; Führen · Macht</span><span class="dots"></span><span class="pg">17</span></div>
+        <div class="toc-row"><span>Orientierung / Strategie / Vision</span><span class="dots"></span><span class="pg">18</span></div>
+        <div class="toc-row"><span>Gefühlte psych. Sicherheit</span><span class="dots"></span><span class="pg">19</span></div>
+        <div class="toc-row"><span>Team &amp; Gremium</span><span class="dots"></span><span class="pg">20</span></div>
+        <div class="toc-row"><span>Irrtum &amp; Fehler · Experiment</span><span class="dots"></span><span class="pg">20</span></div>
+        <div class="toc-row"><span>Kontext prägt Verhalten</span><span class="dots"></span><span class="pg">21</span></div>
+        <div class="toc-row"><span>Strukturelle Entmachtung</span><span class="dots"></span><span class="pg">21</span></div>
+        <div class="toc-row"><span>Transparenz vs. Reporting</span><span class="dots"></span><span class="pg">22</span></div>
+        <div class="toc-group">Werkzeuge</div>
+        <div class="toc-row"><span>Entscheidungstools</span><span class="dots"></span><span class="pg">23</span></div>
+        <div class="toc-row"><span>Formate zur gemeinsamen Arbeit</span><span class="dots"></span><span class="pg">26</span></div>
+        <div class="toc-row"><span>Schutzraum</span><span class="dots"></span><span class="pg">27</span></div>
+        <div class="toc-row"><span>Lernen in 3 Akten</span><span class="dots"></span><span class="pg">28</span></div>
+        <div class="toc-h" style="margin-top:18px;"><span>Führung · No-gos &amp; Do-sos</span><span class="pg">32</span></div>
+        <div class="toc-h"><span>botek Akademie</span><span class="pg">34</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== MOTIVATION ==================== -->
+<section class="sheet paper" id="motivation">
+  <div class="watermark bl" style="color:var(--orange);"><div class="drill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2"><circle cx="60" cy="60" r="52"/><path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="currentColor" fill-opacity="0.4"/><path d="M60 8 L60 60 L14.97 86" stroke-width="2.5"/><circle cx="84" cy="74" r="7"/><circle cx="74" cy="90" r="4.5"/></svg></div></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">01</span><span class="tag">Kapitel</span></div>
+    <h2 class="chap">Unsere <span class="o">Motivation</span></h2>
+    <div class="rule"></div>
+
+    <p class="lede">Ein Unternehmen existiert, um Probleme für den Kunden zu lösen. Gelingt das, würdigt der Kunde es mit Anerkennung — manchmal als bezahlte Rechnung, manchmal als Empfehlung.</p>
+
+    <div class="grid2 tight cols-2">
+      <div>
+        <p>Daher ist es sinnvoll, sich immer die Frage zu stellen: <b>„Welches Problem löst unser Handeln (für unseren Kunden)?"</b> — denn das ist Wertschöpfung und damit echte Arbeit. Alles andere ist entweder notwendiges Übel oder schlicht Beschäftigung und damit Verschwendung.</p>
+        <p>Lasst uns die relevanten Probleme gemeinsam lösen. Eine entscheidende Rolle übernimmt dabei die Führungs-Kraft. Aber wer oder was ist das eigentlich?</p>
+      </div>
+      <div>
+        <p>Viele der Modelle in diesem Heft sind angelehnt — oder sogar 1 : 1 übernommen — von großartigen Vordenkern.</p>
+        <div class="box fill-ink">
+          <div class="lbl">Mit Dank an</div>
+          <p style="margin:0; max-width:none;">Dr. Gerhard Wohland · Benno Löffler · Mark Poppenborg · Lars Vollmer. Soweit möglich haben wir Quellen und Bücher verlinkt — oft sind es Gedanken, die zu weiteren Überlegungen geführt haben. Danke dafür, so oder so.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== PROBLEMLÖSUNGSKREIS — Overview ==================== -->
+<section class="sheet dark" id="kreis">
+  <div class="watermark tr" style="color:var(--orange-lt);"><div class="drill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2"><circle cx="60" cy="60" r="52"/><path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="currentColor" fill-opacity="0.4"/><path d="M60 8 L60 60 L14.97 86" stroke-width="2.5"/><circle cx="84" cy="74" r="7"/><circle cx="74" cy="90" r="4.5"/></svg></div></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">02</span><span class="tag">Kapitel</span></div>
+    <h2 class="chap">Der Problem&shy;<span class="o">lösungskreis</span></h2>
+    <div class="rule"></div>
+
+    <div class="grid12">
+      <div>
+        <p class="lede" style="color:var(--orange-lt);">Es sind genug Probleme für jeden da!</p>
+        <p>Jeden Tag werden wir als Firma konfrontiert mit „nicht schadlos ignorierbaren Ereignissen". Nennen wir sie Probleme. Wie geht eine Organisation eigentlich mit diesen Ereignissen um?</p>
+        <p>Ein Versuch, diesen Prozess zu visualisieren, stellt unser Problemlösungs&shy;kreislauf dar. Was da im Einzelnen nacheinander abläuft, erklären wir im Folgenden.</p>
+      </div>
+
+      <div class="ring-wrap">
+        <svg viewBox="-110 -110 220 220" xmlns="http://www.w3.org/2000/svg" font-family="Archivo, sans-serif">
+          <circle r="78" fill="none" stroke="var(--orange)" stroke-width="1.5" stroke-dasharray="4 5" opacity=".8"/>
+          <!-- 6 nodes as drill-circles -->
+          <g text-anchor="middle">
+            <!-- 01 -->
+            <g transform="translate(0 -78)"><circle r="24" fill="var(--orange)"/><text y="-1" font-size="11" font-weight="900" fill="#363839">01</text><text y="10" font-size="6.5" font-weight="800" fill="#363839">PROBLEM</text></g>
+            <!-- 02 -->
+            <g transform="translate(67.5 -39)"><circle r="24" fill="#fff"/><text y="-1" font-size="11" font-weight="900" fill="var(--orange)">02</text><text y="10" font-size="6.3" font-weight="800" fill="#363839">RELEVANZ</text></g>
+            <!-- 03 -->
+            <g transform="translate(67.5 39)"><circle r="24" fill="#fff"/><text y="-1" font-size="11" font-weight="900" fill="var(--orange)">03</text><text y="10" font-size="6.5" font-weight="800" fill="#363839">IDEEN</text></g>
+            <!-- 04 -->
+            <g transform="translate(0 78)"><circle r="24" fill="var(--orange)"/><text y="-1" font-size="11" font-weight="900" fill="#363839">04</text><text y="10" font-size="6" font-weight="800" fill="#363839">ENTSCH.</text></g>
+            <!-- 05 -->
+            <g transform="translate(-67.5 39)"><circle r="24" fill="#fff"/><text y="-1" font-size="11" font-weight="900" fill="var(--orange)">05</text><text y="10" font-size="6.3" font-weight="800" fill="#363839">MACHEN</text></g>
+            <!-- 06 -->
+            <g transform="translate(-67.5 -39)"><circle r="24" fill="#fff"/><text y="-1" font-size="11" font-weight="900" fill="var(--orange)">06</text><text y="10" font-size="5.6" font-weight="800" fill="#363839">WIRKSAMK.</text></g>
+            <!-- center -->
+            <circle r="30" fill="none" stroke="var(--orange)" stroke-width="2"/>
+            <text y="-2" font-size="8" font-weight="900" fill="#fff">PROBLEM-</text>
+            <text y="9" font-size="8" font-weight="900" fill="var(--orange-lt)">LÖSUNG</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== PROBLEMLÖSUNGSKREIS — Schritte ==================== -->
+<section class="sheet paper" id="kreis-schritte">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">02</span><span class="tag">Der Kreislauf im Detail</span></div>
+    <h2 class="chap">Sechs <span class="o">Schritte</span></h2>
+    <div class="rule"></div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="bub">01</div>
+        <div><h4>Da ist es — ein neues Problem.</h4>
+          <p>Es zeigt sich in vielerlei Gestalt. Ein Kundenauftrag. Eine Entwicklung am Absatzmarkt. Eine Pandemie. Eine Störung in der Produktion. Notwendige Produktivitätssteigerung — usw.</p></div>
+      </div>
+      <div class="step alt">
+        <div class="bub">02</div>
+        <div><h4>Für uns relevant? — Der Relevanz-Check.</h4>
+          <p>Die erste Frage ist, ob das Problem bearbeitungswürdig ist. Erstaunlicherweise ist es viel schwieriger, sich <b>gegen</b> Probleme zu entscheiden. Die Versuchung, alles angehen zu wollen, ist groß. Defokussierung das Ergebnis. Die Leistung dieses Schrittes ist <b>Selektion</b>.</p></div>
+      </div>
+      <div class="step">
+        <div class="bub">03</div>
+        <div><h4>Meinungsbildung &amp; Ideengenerierung</h4>
+          <p>Das Problem ist da, verstanden und kann nicht ignoriert werden. Aber was tun? Welche Handlungsoptionen gibt es? Hat jemand eine Idee, eine Hypothese oder den Drang, etwas zu unternehmen? Gleichzeitig geht es darum, ein kollektives Gefühl für das Problem zu entwickeln.</p></div>
+      </div>
+      <div class="step alt">
+        <div class="bub">04</div>
+        <div><h4>Entscheiden</h4>
+          <p>Welches Tor darf es sein? Wichtig ist nur, dass sich für eines entschieden wird. Die Alternative ist der Status quo. Nicht-Entscheiden ist unmöglich, denn das ist <b>immer</b> die Entscheidung dafür, dass alles so bleibt, wie es ist.</p></div>
+      </div>
+      <div class="step">
+        <div class="bub">05</div>
+        <div><h4>Umsetzen</h4>
+          <p>Nun geht's ans Machen. Das Entschiedene wird umgesetzt.</p></div>
+      </div>
+      <div class="step alt">
+        <div class="bub">06</div>
+        <div><h4>Wirksamkeitscheck</h4>
+          <p>Ist der Kunde zufrieden? Es geht nicht darum, ihm <b>alle</b> Wünsche von den Lippen abzulesen. Wir sind angetreten, um das ursprüngliche Problem zu lösen. Ist es gelöst, gilt es als gelöst. Genügt es noch nicht dem Anspruch des Kunden — umso besser! Der Kreis beginnt von Neuem.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== HÜRDEN — Opener ==================== -->
+<section class="sheet orange" id="huerden">
+  <div class="watermark bl" style="color:#363839;"><div class="drill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2"><circle cx="60" cy="60" r="52"/><path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="currentColor" fill-opacity="0.3"/><path d="M60 8 L60 60 L14.97 86" stroke-width="2.5"/><circle cx="84" cy="74" r="7"/><circle cx="74" cy="90" r="4.5"/></svg></div></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">03</span><span class="tag">Kapitel</span></div>
+    <h2 class="chap">Hürden &amp; Stolpersteine</h2>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <p>Werden Probleme gelöst, wird der Kreis immer durchlaufen. Manchmal geht das sehr schnell: Probleme werden erkannt, angenommen, diskutiert, entschieden, umgesetzt — und am Ende freudig festgestellt, dass es erledigt ist.</p>
+        <p>Manchmal ist es aber auch erstaunlich zäh. Diskussionen ziehen sich wie Kaugummi, alle sind sich einig, dass jemand etwas tun müsste, es gibt sogar klare Meinungen, was getan werden sollte. Aber es passiert — <b>NICHTS!</b></p>
+      </div>
+      <div>
+        <p style="font-weight:800;">Woran liegt das? Wie kann man das erklären?</p>
+        <p>Aus unserer Sicht hilft es, nach folgenden <b>Hürden und Stolpersteinen</b> Ausschau zu halten, die den Kreislauf bremsen können.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== INTERNE REFERENZ ==================== -->
+<section class="sheet paper" id="interne-referenz">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">03</span><span class="tag">Hürde 01</span></div>
+    <h3 class="sub">Interne <span class="o">Referenz</span></h3>
+    <div class="rule"></div>
+    <p>Wann ist ein Problem <b>WIRKLICH</b> relevant? Wer oder was entscheidet eigentlich darüber?</p>
+    <p>Wenn Wertschöpfung wirklich <b>nur</b> die Problemlösung für den Kunden ist, kann verwendete Zeit für andere Dinge als Verschwendung bezeichnet werden? Oftmals sieht man sich aber mit Vorgaben und Arbeitsanweisungen konfrontiert, die <b>intern</b> referenziert sind. Sprich: nicht dem Kunden, sondern der Vorgabe dienend.</p>
+    <div class="box fill-orange" style="max-width:560px;"><p style="margin:0; max-width:none; font-weight:800;">Das gilt es kritisch zu hinterfragen.</p></div>
+  </div>
+</section>
+
+
+<!-- ==================== MACHT IS A BITCH ==================== -->
+<section class="sheet dark" id="macht">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">03</span><span class="tag">Hürde 02</span></div>
+    <h3 class="sub">Macht is a <span class="o">bitch</span></h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <p>Macht wird per Stellung erteilt. Sie funktioniert durch die Idee der möglichen Sanktionen, also dem Machtgefälle (wer kann wem mehr Schaden zufügen). Macht ist in vielen Fällen sinnvoll und hilfreich — immer dann, wenn der Wissensvorsprung beim Mächtigen liegt. Denn damit erfährt die Organisation Geschwindigkeit im Durchlauf des Kreislaufes.</p>
+        <p class="bigstate">Macht hat nur einen Haken — <span class="o">it's a bitch.</span></p>
+        <p>Es besteht die Gefahr, dass Dinge verwechselt werden — z. B. die Stelle mit der Person. Dann kann einem das Machtgefühl zu Kopfe steigen. Was bekanntermaßen keinem gut tut.</p>
+      </div>
+      <div>
+        <blockquote>
+          <p>Willst du den Charakter eines Menschen erkennen, so gib ihm Macht.</p>
+          <cite>Abraham Lincoln</cite>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== BLAUE & ROTE FALLE ==================== -->
+<section class="sheet paper" id="falle">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">03</span><span class="tag">Hürde 03</span></div>
+    <h3 class="sub">Blaue &amp; Rote <span class="o">Falle</span></h3>
+    <div class="rule"></div>
+    <div class="grid12">
+      <div>
+        <p>Begegnet man hochdynamischen (<b>roten</b>) Problemen mit eher blauen Lösungsansätzen, nennen wir das die <b>„blaue Falle"</b>. Die eigentliche Problemlösung wird auf die Hinterbühne gedrängt. Prozesstheater, Heuchelei und fehlende Anpassungsfähigkeit sind unausweichliche Folgen.</p>
+        <p>Verwendet man zur Lösung niederkomplexer (<b>blauer</b>) Probleme immer wieder rote Improvisation, ist dies ineffizient. Wir nennen es <b>„rote Falle"</b>.</p>
+      </div>
+      <div class="falle">
+        <div class="bar">
+          <div class="split"><span class="bl"></span><span class="rd"></span></div>
+          <div class="lab"><span>Problem</span><span>Lösung</span></div>
+        </div>
+        <div class="bar">
+          <div class="split"><span class="rd"></span><span class="bl"></span></div>
+          <div class="lab"><span>Problem</span><span>Lösung</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== DAS ENDMONSTER ==================== -->
+<section class="sheet grey" id="endmonster">
+  <div class="watermark tr" style="color:var(--orange);"><div class="drill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2"><circle cx="60" cy="60" r="52"/><path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="currentColor" fill-opacity="0.4"/><path d="M60 8 L60 60 L14.97 86" stroke-width="2.5"/><circle cx="84" cy="74" r="7"/><circle cx="74" cy="90" r="4.5"/></svg></div></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">03</span><span class="tag">Hürde 04</span></div>
+    <h3 class="sub">Das <span class="o">Endmonster</span></h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <p>Ein Problem kommt unschuldig ums Eck. Klein, abgegrenzt — und es scheint realistisch, Lösungen zu finden. Nun werden weitere Disziplinen hinzugezogen, Interessensgruppen steigen in die Diskussion ein. Wichtige Aspekte und denkbare Szenarien werden beschrieben.</p>
+        <p>Bis man sich umschaut, wurde aus dem kleinen Problem das <b>Endmonster</b>. Ganz als würde man bei einem Computerspiel nach dem Intro direkt gegen den Endgegner antreten.</p>
+      </div>
+      <div>
+        <div class="box danger"><div class="lbl">Zu erwarten</div><p style="margin:0; max-width:none; font-weight:800;">Frust, Resignation und am Ende Kapitulation.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== KONSENSFALLE & STAMMTISCH ==================== -->
+<section class="sheet paper" id="konsensfalle">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">03</span><span class="tag">Hürde 05</span></div>
+    <h3 class="sub">Konsensfalle &amp; <span class="o">Stammtisch</span></h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <p>Ist es nicht schön, wenn sich alle einig sind? Vor allem in einer Gruppe, zu der man gerne gehören will? Blöd nur, wenn es unterschiedliche Meinungen gibt! Gepaart mit unserer Sozialisierung in Mehrheitsentscheiden finden wir uns oft in nicht enden wollenden Diskussionsschleifen. Bis zur Erschöpfung werden Argumente wiederholt — obwohl der Punkt schon zu Beginn verstanden war.</p>
+        <p>Diese Endlosschleife nennen wir <b>Konsensfalle</b>.</p>
+      </div>
+      <div>
+        <p>Ähnlich am Stammtisch. Man trifft sich. Meinungen werden ausgetauscht, ein Monolog reiht sich an den nächsten. Aber nachdem man keine Verantwortung für das Problem trägt und keine Möglichkeit zur Umsetzung hat, bleibt es beim Treffen und Sprechen. Eine Entscheidung oder Handlung leitet sich nicht ab!</p>
+        <div class="box fill-ink"><p style="margin:0; max-width:none; font-weight:800;">Willkommen am <span style="color:var(--orange-lt);">Stammtisch</span>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== VERANTWORTUNGSDIEBSTAHL + SCHULDEN & HELDEN ==================== -->
+<section class="sheet dark" id="verantwortung">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">03</span><span class="tag">Hürde 06 + 07</span></div>
+    <h3 class="sub">Verantwortungs&shy;diebstahl <span class="o">·</span> Schulden &amp; Helden</h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <h4 style="text-transform:uppercase; font-weight:900; margin:0 0 10px; color:var(--orange-lt);">Verantwortungsdiebstahl</h4>
+        <p>Teams, die Verantwortung übernehmen, wünscht sich jeder. Bis zu dem Punkt, an dem Lösungswege getrieben werden, die nicht zur eigenen Vorstellung passen. Nun zeigt sich, ob es einen ausreichenden Autonomiegrad gibt. Oder anders: <i>„Behält der Vorgesetzte die Nerven?"</i> Wird über Macht der präferierte Lösungsweg erzwungen, ist auch die Verantwortung nicht mehr für das Team verfügbar.</p>
+      </div>
+      <div>
+        <h4 style="text-transform:uppercase; font-weight:900; margin:0 0 10px; color:var(--orange-lt);">Schulden &amp; Helden</h4>
+        <p>Diese Falle lässt sich einfach und stimmig mit folgendem Zitat auf den Punkt bringen.</p>
+        <blockquote>
+          <p>Solange Schuldige (oder Helden) gebraucht werden, um eine Situation plausibel zu erklären, ist sie noch nicht verstanden.</p>
+          <cite>Dr. Gerhard Wohland</cite>
+          <span class="src">Wohland / Wiemeyer, „Denkwerkzeuge der Höchstleister", 2012, S. 24</span>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== MOTIVATIONSFALLE + GEHORSAMSFALLE ==================== -->
+<section class="sheet paper" id="motivationsfalle">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">03</span><span class="tag">Hürde 08 + 09</span></div>
+    <h3 class="sub">Motivations&shy;falle <span class="o">·</span> Gehorsamsfalle</h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <p class="bigstate">Jeder ist motiviert, bis er lang genug vom <span class="o">System</span> demotiviert wurde!</p>
+        <p>Viele Jahre galt das Narrativ, Menschen müssten extrinsisch motiviert werden. Dies ist inzwischen widerlegt. Vielmehr hilft die Haltung, dass jeder Mensch Probleme lösen und seinen Beitrag leisten will. Beobachtet man Menschen, die keine Lust mehr zeigen mitzuhelfen, lohnt sich die Suche nach den Gründen.</p>
+      </div>
+      <div>
+        <h4 style="text-transform:uppercase; font-weight:900; margin:0 0 10px;">Gehorsamsfalle</h4>
+        <p>Unterschätze niemals den sozialen Druck der Meinung von Mächtigen. Am Ende ist es nur logisch, dass man gefallen will. <b>Eine gute Idee sollte keine Hierarchie kennen!</b></p>
+        <blockquote>
+          <p>Verantwortung wird spürbar, wenn der Gehorsam kollabiert und in Widerständigkeit umschlägt, die der Problemlösung dient.</p>
+          <cite>Benno Löffler</cite>
+          <span class="src">„Saugute Zusammenarbeit", 2021, S. 159</span>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== DENKMODELLE — Primat der Wertschöpfung ==================== -->
+<section class="sheet orange" id="denkmodelle">
+  <div class="watermark tr" style="color:#363839;"><div class="drill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2"><circle cx="60" cy="60" r="52"/><path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="currentColor" fill-opacity="0.3"/><path d="M60 8 L60 60 L14.97 86" stroke-width="2.5"/><circle cx="84" cy="74" r="7"/><circle cx="74" cy="90" r="4.5"/></svg></div></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">04</span><span class="tag">Kapitel</span></div>
+    <h2 class="chap">Denkmodelle</h2>
+    <div class="rule"></div>
+    <h3 class="sub">Primat der Wertschöpfung</h3>
+    <div class="grid12">
+      <div>
+        <p class="bigstate" style="color:var(--ink);">Wertschöpfung ist das, was der Kunde bezahlt.</p>
+        <p>Wird Wertschöpfung versehentlich unterlassen, dann bemerkt der Kunde das und beklagt sich bitterlich.</p>
+        <p>Wird unnötiger Schnickschnack unterlassen, dann ist das dem Kunden gleichgültig — denn er bemerkt es gar nicht.</p>
+        <p style="font-family:'Space Mono',monospace; font-size:11px; opacity:.7;">Bild-Idee nach: Fabian Schünke, primat-der-wertschoepfung.de</p>
+      </div>
+      <div class="photo-frame">
+        <img class="photo-accent" src="assets/photo-bohrstange.png" alt="botek Bohrstange — Wertschöpfung im Werkstoff">
+        <span class="cap">Präzision im Werkstoff</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== STACEY MATRIX ==================== -->
+<section class="sheet paper" id="stacey">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">04</span><span class="tag">Denkmodell</span></div>
+    <h3 class="sub">Stacey-Matrix <span class="o">·</span> Rot &amp; Blau</h3>
+    <div class="rule"></div>
+    <div class="grid2" style="align-items:center;">
+      <div class="stacey-pair">
+        <div class="col blue">
+          <div class="h">WIE?</div>
+          <ul><li>Prozess</li><li>Regel</li><li>Steuern</li><li>Wissen</li><li>Fehler</li></ul>
+        </div>
+        <div class="col red">
+          <div class="h">WER?</div>
+          <ul><li>Projekt</li><li>Prinzip</li><li>Führung</li><li>Könner / Talent</li><li>Irrtum</li></ul>
+        </div>
+      </div>
+      <div style="padding:0 24px;">
+        <div class="matrix">
+          <span class="axis-y">unklar &nbsp; LÖSUNG &nbsp; klar</span>
+          <span class="axis-x"><span>klar</span><span>PROBLEM</span><span>unklar</span></span>
+          <span class="quad q-ein">einfach</span>
+          <span class="quad q-komp">kompliziert</span>
+          <span class="quad q-kx">komplex</span>
+          <span class="quad q-ch">Chaos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== ZENTRUM & PERIPHERIE + STEUERN & FÜHREN ==================== -->
+<section class="sheet grey" id="zentrum">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">04</span><span class="tag">Denkmodell</span></div>
+    <h3 class="sub">Zentrum &amp; Peripherie <span class="o">·</span> Steuern &amp; Führen</h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <div class="box"><div class="lbl">Zentrum &amp; Peripherie</div>
+          <p style="max-width:none;"><b>Zentrum</b> = Arbeit am System <b>FÜR</b> den Kapitalgeber / die langfristige Zukunft der Organisation.<br><b>Peripherie</b> = Arbeit im System <b>FÜR</b> den Markt / den Kunden, der die Rechnungen zahlt.</p>
+          <p style="margin:0; max-width:none;">Es sind keine Menschen oder Räume, vielmehr beobachtbare Rollen, die gefüllt werden müssen.</p>
+        </div>
+      </div>
+      <div>
+        <div class="box fill-ink"><div class="lbl">Steuern &amp; Führen · Macht</div>
+          <p style="max-width:none;"><b>Steuern</b> funktioniert durch Macht und Gehorsam.<br><b>Führung</b> funktioniert durch Ansehen und freiwillige Gefolgschaft.</p>
+          <p style="margin:0; max-width:none;">Es gibt kein gut oder schlecht, kein neu oder alt. Es geht darum zu erkennen, welcher Mechanismus in welcher Situation dienlich oder hinderlich ist.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== ORIENTIERUNG / STRATEGIE / VISION ==================== -->
+<section class="sheet dark" id="strategie">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">04</span><span class="tag">Denkmodell</span></div>
+    <h3 class="sub">Orientierung <span class="o">·</span> Strategie <span class="o">·</span> Vision</h3>
+    <div class="rule"></div>
+    <blockquote style="border-left-width:12px;">
+      <p style="font-size:clamp(16px,1.9vw,20px); line-height:1.5;">„Eine Strategie braucht man, wenn die Zukunft nicht bekannt ist. Das trifft auf immer größere Teile der Wertschöpfung zu. Wenn schon alles bekannt ist, jeder die genaue Schrittfolge kennt, um vom heutigen zu einem angestrebten Zustand zu kommen, dann braucht man keine Strategie sondern einen Plan. Der Plan beschreibt den Weg und verteilt Aufgaben. […]<br><br>
+      Strategie verhindert Beliebigkeit. Sie sorgt dafür, dass man auch ohne vollständiges Wissen und ohne Anweisungen am Ort des Geschehens entscheiden kann.<br><br>
+      Das tut eine Strategie, indem sie von der Kunst des Weglassens Gebrauch macht. Eine Strategie sagt einem Mitarbeiter nicht, was er tun soll, sondern was er nicht tun darf. Was übrig bleibt, ist ein leerer Handlungsraum, innerhalb dessen Mitarbeiter entscheiden können, ohne jedes Mal fragen zu müssen."</p>
+      <cite>Mark Poppenborg</cite>
+      <span class="src">„Wir führen anders!", 2021, S. 191 f.</span>
+    </blockquote>
+  </div>
+</section>
+
+
+<!-- ==================== GEFÜHLTE PSYCH. SICHERHEIT ==================== -->
+<section class="sheet paper" id="sicherheit">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">04</span><span class="tag">Denkmodell</span></div>
+    <h3 class="sub">Gefühlte psych. <span class="o">Sicherheit</span> · Vertrauen</h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <p>Stark trivialisiert: <b>nur wer sich wohl und sicher fühlt</b>, wird aufhören zu taktieren und frei agieren. Wobei dies auch beherztes Streiten in der Sache bedeuten darf. In vielen Organisationen, Teams oder Arbeitsgruppen ist dies aber nicht der Fall.</p>
+        <p>Es ist unsicher, ob man etwas zu befürchten hat. Es herrscht Misstrauen — und das aus gutem Grund. Da ist es nur logisch, dass Menschen vorsichtig werden und sich zurücknehmen, egal ob sie einen guten Einwand, eine Idee oder eine Warnung im Kopf hätten.</p>
+      </div>
+      <div>
+        <div class="box fill-orange"><p style="margin:0; max-width:none; font-weight:800;">Vertrauen und gefühlte psychologische Sicherheit ist ein wirtschaftlich relevantes Gruppenphänomen.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== TEAM & GREMIUM + IRRTUM & FEHLER ==================== -->
+<section class="sheet grey" id="team-gremium">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">04</span><span class="tag">Denkmodell</span></div>
+    <h3 class="sub">Team &amp; Gremium <span class="o">·</span> Irrtum &amp; Fehler</h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <div class="box"><div class="lbl">Team &amp; Gremium</div>
+          <p style="max-width:none;">Ein <b>Team</b> entwickelt Ideen und Handlungsoptionen, ein <b>Gremium</b> entscheidet, was getan wird. Das können, müssen aber nicht dieselben Personen sein.</p>
+          <p style="margin:0; max-width:none;">Manchmal liegt sogar in unterschiedlichen Besetzungen der Schlüssel, um im Kreislauf weiterzukommen.</p>
+        </div>
+      </div>
+      <div>
+        <div class="box"><div class="lbl">Irrtum &amp; Fehler · Experiment</div>
+          <p style="max-width:none;">Liegt Wissen zum Problem vor, wurde es aber falsch gemacht, ist das ein <b>Fehler</b>. Ist die Situation neu und nie dagewesen, ist ein <b>Irrtum</b> die Enttäuschung einer intelligenten Annahme.</p>
+          <p style="margin:0; max-width:none;">Bei hochdynamischer Ausgangssituation kann es kein Wissen geben. Dann ist die Forderung nach einem Plan Unsinn. Dann muss man <b>inkrementell und experimentell</b> vorgehen. So lernt eine Organisation und erlangt Können.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== KONTEXT + STRUKTURELLE ENTMACHTUNG ==================== -->
+<section class="sheet paper" id="kontext">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">04</span><span class="tag">Denkmodell</span></div>
+    <h3 class="sub">Kontext prägt Verhalten <span class="o">·</span> Strukturelle Entmachtung</h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <p>Der Kontext prägt das Verhalten eines Menschen viel mehr als die Psyche, der Typ oder das Wertesystem. Ausnahmen bestätigen die Regel, aber tendenziell stimmt die Aussage. Auf einer Beerdigung, einem Fußballspiel und in einer Sauna kann man ähnliches Verhalten beobachten. Wechseln Menschen den Kontext, zeigt sich angepasstes Verhalten.</p>
+        <p class="bigstate" style="font-size:clamp(18px,2.2vw,24px);">Daher ist es viel wirksamer, am <span class="o">Kontext</span> statt an den Menschen zu arbeiten!</p>
+      </div>
+      <div>
+        <div class="box fill-ink"><div class="lbl">Strukturelle Entmachtung</div>
+          <p style="max-width:none;">Auch wenn gefühlte Sicherheit, Verantwortlichkeit oder freiwilliges Engagement zum größten Teil von nicht kausal beeinflussbaren Gefühlen getragen werden, gibt es Strukturen, die diese Phänomene begünstigen.</p>
+          <p style="margin:0; max-width:none;">So schafft es <b style="color:var(--orange-lt);">SCRUM</b>, eine Gewaltenteilung zu erzeugen und Übergriffigkeit unwahrscheinlicher zu machen. Oder <b style="color:var(--orange-lt);">OPEN SPACE</b>, den Spirit von Aufbruch und freiwilliger Problemlösung zu erzeugen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== TRANSPARENZ VS REPORTING ==================== -->
+<section class="sheet grey" id="transparenz">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">04</span><span class="tag">Denkmodell</span></div>
+    <h3 class="sub">Transparenz <span class="o">vs.</span> Reporting</h3>
+    <div class="rule"></div>
+    <p>Es geht um Kommunikation, also den Fluss von Informationen. Allerdings empfiehlt es sich, genauer hinzuschauen.</p>
+    <div class="grid2 cols-2">
+      <div class="box danger"><div class="lbl">Reporting</div>
+        <p style="margin:0 0 10px; max-width:none;">Wenn mit der Information auch die <b>Verantwortung</b> fließt, nennen wir das Reporting.</p>
+        <p style="margin:0; max-width:none;">Dient der Informationsfluss der Befriedigung des Sicherheitsbedürfnisses eines Vorgesetzten, dann ist es Reporting — wahrscheinlich mit wenig wertschöpfungsrelevantem Effekt.</p>
+      </div>
+      <div class="box fill-orange"><div class="lbl" style="color:var(--ink);">Transparenz</div>
+        <p style="margin:0 0 10px; max-width:none;">Werden Informationen öffentlich gemacht, um zu <b>lernen</b>, nennen wir das Transparenz.</p>
+        <p style="margin:0; max-width:none; font-weight:800;">Stellt jemand Informationen zur Verfügung, um zu lernen oder anderen Lernen zu ermöglichen — eine tolle Zutat für lernende Organisationen!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== WERKZEUGE — Entscheidungstools ==================== -->
+<section class="sheet dark" id="werkzeuge">
+  <div class="watermark bl" style="color:var(--orange-lt);"><div class="drill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2"><circle cx="60" cy="60" r="52"/><path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="currentColor" fill-opacity="0.4"/><path d="M60 8 L60 60 L14.97 86" stroke-width="2.5"/><circle cx="84" cy="74" r="7"/><circle cx="74" cy="90" r="4.5"/></svg></div></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">05</span><span class="tag">Kapitel</span></div>
+    <h2 class="chap">Werkzeuge</h2>
+    <div class="rule"></div>
+    <h3 class="sub">Entscheidungstools</h3>
+    <div class="tools">
+      <div class="tool"><div class="nm">Konsens</div><div class="ds">Alle sind sich einig.</div></div>
+      <div class="tool"><div class="nm">Mehrheit</div><div class="ds">Die Mehrheit ist dafür.</div></div>
+      <div class="tool"><div class="nm">Einzelentscheid</div><div class="ds">Einer entscheidet für das Team. <i>(Muss nicht der Mächtigste sein.)</i></div></div>
+      <div class="tool"><div class="nm">Konsult. Einzelentscheid</div><div class="ds">Einer entscheidet für das Team, nachdem er sich Feedback geholt hat. <i>(Feedback ist nicht mit Freigabe zu verwechseln.)</i></div></div>
+      <div class="tool"><div class="nm">Ablehnung</div><div class="ds">Der Grad der Ablehnung wird abgefragt. <b>Gegen welchen Vorschlag existiert die größte Ablehnung?</b></div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== WERKZEUGE — Konsent ==================== -->
+<section class="sheet paper" id="konsent">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">05</span><span class="tag">Entscheidungstools</span></div>
+    <h3 class="sub">Konsent</h3>
+    <div class="rule"></div>
+    <div class="grid2" style="align-items:start;">
+      <div>
+        <div class="box"><div class="lbl">1. Die Vorbereitung</div>
+          <p style="margin:0; max-width:none;">Ein Vorschlag ist die Grundlage zur Durchführung, Festlegung eines Moderators, Dokumentation der Vorschläge. Danach wird in einer Runde erfragt, ob alle das gleiche Verständnis über den Vorschlag haben.</p>
+        </div>
+        <p style="margin-top:18px; font-weight:900; text-transform:uppercase;">2. Erster Durchgang</p>
+      </div>
+      <div class="konsent">
+        <div class="row"><div class="ic">👍</div><div><b>Daumen hoch</b> · <i>„Ja, ich bin dabei!"</i></div></div>
+        <div class="row"><div class="ic">👉</div><div><b>Daumen zur Seite</b> · <i>„Ja, ich bin dabei, habe aber folgende Bedenken</i> — die bitte gehört werden.<i>"</i></div></div>
+        <div class="row"><div class="ic">👎</div><div><b>Daumen runter</b> · <i>„Nein, ich bin nicht dabei,</i> denn ich habe folgende schwere Bedenken.<i>"</i></div></div>
+        <div class="row"><div class="ic">✊</div><div><b>Faust · Veto</b> · Der Vorschlag geht so gar nicht. Ich wende Schaden ab. <b>ABER nun muss ich einen Lösungsvorschlag machen.</b></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== WERKZEUGE — Formate ==================== -->
+<section class="sheet grey" id="formate">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">05</span><span class="tag">Werkzeug</span></div>
+    <h3 class="sub">Formate zur <span class="o">gemeinsamen Arbeit</span></h3>
+    <div class="rule"></div>
+    <p>Folgende Formate können helfen, den Kontext zu verändern:</p>
+    <div class="formate">
+      <div class="chip"><span class="n">1</span>Open Space</div>
+      <div class="chip"><span class="n">2</span>Fish-Bowl</div>
+      <div class="chip"><span class="n">3</span>World Café</div>
+      <div class="chip"><span class="n">4</span>Sprint</div>
+      <div class="chip"><span class="n">5</span>Pitch</div>
+      <div class="chip plus"><span class="n">+</span>und Kombinationen daraus</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== WERKZEUGE — Schutzraum ==================== -->
+<section class="sheet paper" id="schutzraum">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">05</span><span class="tag">Werkzeug</span></div>
+    <h3 class="sub">Schutzraum</h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <p>Ein System hat ein Immunsystem. Kulturfremdes Vorgehen wird unterdrückt, denn es stört das operative Geschäft. Besteht aber die These, dass eine lokal andere Vorgehensweise ein Experiment wäre, muss dieses Experiment vor dem (Immun-)System geschützt werden.</p>
+        <p>Dies geht z. B. mit einem <b>Schutzraum</b>. Dieser legitimiert lokale Ausnahmen.</p>
+      </div>
+      <div>
+        <div class="box"><div class="lbl">Zutaten für einen Schutzraum</div>
+          <ul>
+            <li>Ein Problem</li>
+            <li>Freiwillige, die <i>„es anders probieren wollen"</i> — idealerweise Könner</li>
+            <li>Mächtige, die das Experiment öffentlich legitimieren können</li>
+            <li>Eine Umgebung, die sich beeindrucken lässt</li>
+          </ul>
+        </div>
+        <div class="box danger" style="margin-top:16px;"><div class="lbl">Achtung Falle</div>
+          <p style="margin:0; max-width:none;">Ein erfolgreiches Schutzraum-Projekt kann man nicht in die Organisation „ausrollen", denn es ist ein lokales Phänomen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== WERKZEUGE — Lernen in 3 Akten · Review ==================== -->
+<section class="sheet grey" id="lernen-review">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">05</span><span class="tag">Lernen in 3 Akten · I</span></div>
+    <h3 class="sub">Review <span class="o">·</span> Inhalt</h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2">
+      <div>
+        <p><b>1. Vorbereitung</b><br>Es wird ein Moderator organisiert und man lädt die Menschen ein, von denen man lernen kann.</p>
+        <p style="font-weight:900; text-transform:uppercase; margin-top:18px;">3. Nach dem Review</p>
+        <p>Das Team entscheidet (alleine), welche Elemente übernommen werden.</p>
+      </div>
+      <div>
+        <div class="box"><div class="lbl">2. Das Review</div>
+          <ul>
+            <li>Das Team zeigt den Inhalt, zu dem es Feedback braucht.</li>
+            <li>Die Feedbackgeber können Verständnisfragen zum Inhalt stellen.</li>
+            <li>Es wird Feedback gegeben. <b style="color:var(--orange);">ACHTUNG</b> — Ein Rat ist kein Befehl. <b style="color:var(--orange);">ACHTUNG</b> — Verantwortung bleibt beim Team.</li>
+            <li>Das Team kann Verständnisfragen zum Feedback stellen. <b style="color:var(--orange);">ACHTUNG</b> — keine Rechtfertigung.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== WERKZEUGE — Lernen in 3 Akten · Retro ==================== -->
+<section class="sheet paper" id="lernen-retro">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">05</span><span class="tag">Lernen in 3 Akten · II</span></div>
+    <h3 class="sub">Retro <span class="o">·</span> Modus / Vorgehen</h3>
+    <div class="rule"></div>
+    <div class="grid12">
+      <div>
+        <p><b>1. Vorbereitung</b><br>Es wird ein Moderator organisiert.</p>
+        <div class="box"><div class="lbl">2. Die Retro</div>
+          <ul>
+            <li>Was war gut am Modus?</li>
+            <li>Was war nicht gut am Modus?</li>
+            <li>Wovon wollen wir mehr?</li>
+            <li>Wovon wollen wir weniger?</li>
+            <li>Was ändern wir konkret?</li>
+          </ul>
+        </div>
+        <p style="margin-top:14px;"><b>3. Nach der Retro</b><br>Das Team verändert den Modus konkret.</p>
+      </div>
+      <div>
+        <div class="retro">
+          <div>Gut<span></span></div>
+          <div>Schlecht<span></span></div>
+          <div>Mehr<span></span></div>
+          <div>Weniger<span></span></div>
+        </div>
+        <p style="text-align:center; font-family:'Archivo Black',sans-serif; color:var(--orange); margin-top:14px; text-transform:uppercase; letter-spacing:.04em;">→ Ausprobieren</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== WERKZEUGE — Lernen in 3 Akten · Feedback ==================== -->
+<section class="sheet grey" id="lernen-feedback">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">05</span><span class="tag">Lernen in 3 Akten · III</span></div>
+    <h3 class="sub">Feedback <span class="o">·</span> Wirkung von Individuum</h3>
+    <div class="rule"></div>
+    <div class="grid2 cols-2" style="align-items:start;">
+      <div>
+        <div class="box danger"><div class="lbl">Achtung</div>
+          <p style="margin:0; max-width:none;">Keine <b>DU</b>-Aussagen! &nbsp;<span style="color:var(--ink-2);">(musst / solltest / bist / kannst nicht …)</span></p>
+        </div>
+        <p style="margin-top:18px;">Feedback richtet sich auf <b>die eigene Wahrnehmung</b> und auf <b>den eigenen Wunsch</b>. Niemand wird belehrt — und niemand bekommt einen Befehl.</p>
+      </div>
+      <div class="burger">
+        <span class="pill">Persönliches Feedback · der PoWWW-Burger</span>
+        <div class="bun top">Positiver Einstieg</div>
+        <div class="fill">Was habe ich <span class="o">W</span>ahrgenommen?<br><span class="o">W</span>irkung auf mich?<br>Mein <span class="o">W</span>unsch</div>
+        <div class="bun bot">Ergebnis</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== FÜHRUNG — No-gos & Do-sos (Opener) ==================== -->
+<section class="sheet orange" id="nogos">
+  <div class="watermark tr" style="color:#363839;"><div class="drill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2"><circle cx="60" cy="60" r="52"/><path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="currentColor" fill-opacity="0.3"/><path d="M60 8 L60 60 L14.97 86" stroke-width="2.5"/><circle cx="84" cy="74" r="7"/><circle cx="74" cy="90" r="4.5"/></svg></div></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">06</span><span class="tag">Cheat-Sheet für den Alltag bei botek</span></div>
+    <h2 class="chap">Führung · No-gos &amp; Do-sos</h2>
+    <div class="rule"></div>
+    <p class="lede" style="max-width:80ch;">Alles bisher Gesagte ist viel zu viel für den Montagmorgen. Hier die Kurzfassung: was du als botek-Führungskraft tunlichst <b>lassen</b> solltest — und was du dafür <b>tun</b> kannst. Keine Regel. Eine Orientierung.</p>
+    <div class="balance">
+      <div class="pnl no">
+        <div class="ph">No-gos</div>
+        <ul>
+          <li><span><b>Vorgaben statt Probleme.</b> Aufgaben verteilen, ohne klarzustellen, welches Kundenproblem dahintersteht.</span></li>
+          <li><span><b>Macht als Standard.</b> Bei jeder Reibung die Stelle ziehen, statt das Problem zu durchdringen.</span></li>
+          <li><span><b>Konsens-Hochzeit.</b> Diskussionen so lange laufen lassen, bis alle erschöpft „ja" sagen.</span></li>
+          <li><span><b>Reporting statt Transparenz.</b> Zahlen einsammeln, weil sie dich beruhigen.</span></li>
+          <li><span><b>Endmonster bauen.</b> Aus jedem kleinen Problem ein bereichsübergreifendes Großprojekt machen.</span></li>
+        </ul>
+      </div>
+      <div class="pnl do">
+        <div class="ph">Do-sos</div>
+        <ul>
+          <li><span><b>Frag nach dem Problem.</b> „Welches Kundenproblem lösen wir hier gerade?" — vor jedem Termin.</span></li>
+          <li><span><b>Trenne Stelle und Person.</b> Macht ist ein Werkzeug, kein Wesenszug.</span></li>
+          <li><span><b>Entscheide klar.</b> Konsultativer Einzelentscheid schlägt erschöpften Scheinkonsens.</span></li>
+          <li><span><b>Mach Information öffentlich.</b> Damit andere lernen, nicht damit du dich absicherst.</span></li>
+          <li><span><b>Schneide das Problem klein.</b> Lieber 5 echte Experimente als ein perfekter Masterplan.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== FÜHRUNG — No-gos & Do-sos (Vertiefung) ==================== -->
+<section class="sheet paper" id="nogos-2">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">06</span><span class="tag">Im Konflikt · im Team · an der Maschine</span></div>
+    <h3 class="sub">No-gos &amp; Do-sos <span class="o">·</span> Vertiefung</h3>
+    <div class="rule"></div>
+    <div class="balance">
+      <div class="pnl no">
+        <div class="ph">No-gos</div>
+        <ul>
+          <li><span><b>Schuldige suchen.</b> „Wer war's?" rettet keinen Werkzeug-Riss.</span></li>
+          <li><span><b>Helden feiern.</b> Wer dauerhaft brennt, brennt aus — und du verstehst dein System nicht.</span></li>
+          <li><span><b>Blaue Antwort auf rote Frage.</b> Standardprozess da auflegen, wo gerade nichts standardisierbar ist.</span></li>
+          <li><span><b>Stammtischführung.</b> In der Kaffeeküche meckern, im Meeting nicken.</span></li>
+          <li><span><b>Mit DU-Botschaften feedbacken.</b> „Du musst …" / „Du kannst nicht …" — der schnellste Weg, das Gespräch zu beenden.</span></li>
+        </ul>
+      </div>
+      <div class="pnl do">
+        <div class="ph">Do-sos</div>
+        <ul>
+          <li><span><b>Frag „warum konnte das passieren?"</b> Strukturen, nicht Personen.</span></li>
+          <li><span><b>Bau Schutzräume.</b> Ein Problem, freiwillige Könner, ein Mächtiger, der den Rücken freihält.</span></li>
+          <li><span><b>Sortiere rot / blau.</b> Stacey hilft: WIE-Fragen brauchen Prozess, WER-Fragen brauchen Können.</span></li>
+          <li><span><b>Direkt &amp; einmal.</b> Was du im Meeting nicht sagst, sage es im Meeting — oder nie.</span></li>
+          <li><span><b>Sprich aus eigener Wahrnehmung.</b> „Ich habe wahrgenommen … / Wirkung auf mich … / Mein Wunsch …"</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="box fill-ink" style="margin-top:26px;">
+      <p style="margin:0; max-width:none;">Diese Listen sind kein Gesetzbuch. Sie sind ein <b style="color:var(--orange-lt);">Spiegel</b>: lies sie alle drei Monate noch einmal durch und frag dich, an welcher Stelle <i>du</i> aktuell hängst. Das ist der nächste Hebel.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== ÜBER UNS · BOTEK AKADEMIE ==================== -->
+<section class="sheet dark" id="akademie">
+  <div class="watermark bl" style="color:var(--orange-lt);"><div class="drill"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2"><circle cx="60" cy="60" r="52"/><path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="currentColor" fill-opacity="0.4"/><path d="M60 8 L60 60 L14.97 86" stroke-width="2.5"/><circle cx="84" cy="74" r="7"/><circle cx="74" cy="90" r="4.5"/></svg></div></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">07</span><span class="tag">Über uns…</span></div>
+    <h2 class="chap">botek <span class="o">Akademie</span></h2>
+    <div class="rule"></div>
+    <div class="grid12" style="align-items:start;">
+      <div>
+        <p>Seit Jahrzehnten teilen wir bei <b>botek Präzisionsbohrtechnik</b> unser Wissen über tiefes Bohren erfolgreich mit unseren Kunden weltweit. Was im Werkstoff funktioniert, gilt auch in der Organisation: gerade, präzise und mit dem richtigen Schnitt.</p>
+        <p>2025 haben wir uns als Firma vorgenommen, die <b>Transformation von Führung &amp; Zusammenarbeit</b> bewusst zu gestalten. Wir haben bereits einen spannenden Weg mit vielen Veränderungen zurückgelegt — gleichzeitig haben wir noch ein ganzes Stück vor uns.</p>
+        <p>Nachdem unser Angebot an Schulungen, Workshops und Events stetig gewachsen ist, haben wir <b>2026</b> offiziell die <b>botek Akademie</b> gegründet — als Heimat für alles, was wir lernen und weitergeben wollen.</p>
+      </div>
+      <div>
+        <div class="about-card">
+          <h4>So erreichen Sie uns…</h4>
+          <div class="r"><b>botek Akademie</b></div>
+          <div class="r">botek Präzisionsbohrtechnik GmbH</div>
+          <div class="r">Längenfeldstraße 4</div>
+          <div class="r">72585 Riederich</div>
+          <div class="r" style="margin-top:10px;">akademie@botek.de</div>
+          <div class="r">www.botek.de</div>
+        </div>
+        <div class="about-card" style="margin-top:14px; background:var(--ink); color:#fff; border-color:var(--orange);">
+          <h4>Im Auftrag von</h4>
+          <div class="r"><b>V&amp;S Unternehmerberatung</b></div>
+          <div class="r">Texte &amp; Inhalte: V&amp;S Team</div>
+          <div class="r">Layout &amp; Design: V&amp;S</div>
+        </div>
+      </div>
+    </div>
+    <div class="imprint">
+      Erscheinungsjahr 2026 // 1. Auflage // Copyright botek Präzisionsbohrtechnik GmbH<br>
+      Alle Rechte, insbesondere das Recht auf Vervielfältigung und Verbreitung sowie der Übersetzung, vorbehalten.<br>
+      Entwurf in Anlehnung an „So denken wir Führungskräfte bei Herding" der Herding Akademie.
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== FOOTER / GALLERY NAV (Bildschirm) ==================== -->
+<footer class="gallery">
+  <div class="wrap">
+    <div class="ft-top">
+      <img src="assets/logo-botek.png" alt="botek">
+      <span class="t">Design-Galerie · Entwurf 6 von 10 · „Bauhaus Geometrisch"</span>
+    </div>
+    <nav class="nav-grid" aria-label="Design-Galerie Navigation">
+      <a href="index.html">Übersicht</a>
+      <a href="design-alternative-1.html">Design-Alternative-1</a>
+      <a href="design-alternative-2.html">Design-Alternative-2</a>
+      <a href="design-alternative-3.html">Design-Alternative-3</a>
+      <a href="design-alternative-4.html">Design-Alternative-4</a>
+      <a href="design-alternative-5.html">Design-Alternative-5</a>
+      <a href="design-alternative-6.html" class="active">Design-Alternative-6</a>
+      <a href="design-alternative-7.html">Design-Alternative-7</a>
+      <a href="design-alternative-8.html">Design-Alternative-8</a>
+      <a href="design-alternative-9.html">Design-Alternative-9</a>
+      <a href="design-alternative-10.html">Design-Alternative-10</a>
+      <a href="Botek_Booklet.pdf" class="pdf">Original-Booklet (PDF)</a>
+    </nav>
+    <div class="ft-contact">botek Präzisionsbohrtechnik GmbH · www.botek.de</div>
+  </div>
+</footer>
+
+</body>
+</html>

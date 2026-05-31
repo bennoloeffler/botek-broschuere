@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2">
+  <!-- Einlippenbohrer-Querschnitt (stilisiert): Aussenkreis, Spannut (V-Sektor), Kuehlkanal -->
+  <circle cx="60" cy="60" r="52"/>
+  <!-- Spannut: Kreissegment ~120 Grad herausgeschnitten -->
+  <path d="M60 60 L60 8 A52 52 0 0 0 14.97 86 Z" fill="currentColor" fill-opacity="0.12" stroke="currentColor"/>
+  <!-- Schneide / Fase -->
+  <path d="M60 8 L60 60 L14.97 86" stroke-width="2.5"/>
+  <!-- zwei Kuehlkanaele (Nieren/Bohrungen) -->
+  <circle cx="84" cy="74" r="7"/>
+  <circle cx="74" cy="90" r="4.5"/>
+  <!-- Zentrum -->
+  <circle cx="60" cy="60" r="2.2" fill="currentColor"/>
+</svg>
